@@ -14,6 +14,7 @@
       display: flex;
       align-items: center;
       overflow: hidden;
+      background: var(--color-ink);
     }
 
     #hero-canvas {
@@ -42,8 +43,17 @@
       display: block;
       width: 32px;
       height: 1px;
-      background: var(--color-ink-3);
+      background: rgba(255,255,255,0.3);
     }
+
+    /* Inverted hero text & controls */
+    .hero .label { color: rgba(255,255,255,0.5); font-size: var(--size-sm); letter-spacing: 0.08em; }
+    .hero h1 { color: var(--color-bg); }
+    .hero .hero__sub { color: rgba(255,255,255,0.65); }
+    .hero .btn--primary { background: var(--color-bg); color: var(--color-ink); }
+    .hero .btn--primary:hover { background: rgba(255,255,255,0.85); }
+    .hero .btn--outline { border-color: rgba(255,255,255,0.35); color: var(--color-bg); }
+    .hero .btn--outline:hover { background: rgba(255,255,255,0.1); color: var(--color-bg); }
 
     .hero__headline {
       margin-bottom: var(--space-4);
@@ -83,7 +93,7 @@
       font-size: var(--size-xs);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--color-ink-3);
+      color: rgba(255,255,255,0.4);
     }
 
     .hero__scroll::after {
@@ -91,7 +101,7 @@
       display: block;
       width: 1px;
       height: 40px;
-      background: linear-gradient(to bottom, var(--color-ink-3), transparent);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
     }
 
     @keyframes bounce {
@@ -153,8 +163,9 @@
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main">
     <div class="nav__inner">
-      <a href="/" class="nav__logo" aria-label="Alfred Law — home">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
         <img src="assets/images/AL.webp" alt="AL" />
+        <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
       </a>
       <ul class="nav__links" id="nav-links" role="list">
         <li><a href="/">Work</a></li>
@@ -324,7 +335,7 @@
   </section>
 
   <!-- CONTACT -->
-  <section class="contact">
+  <section class="contact" style="background:#f7f7f7;">
     <div class="container">
       <p class="label mb-2">Get in touch</p>
       <h2 class="mb-4 fade-up">Let's work together.</h2>
@@ -400,7 +411,7 @@
               ctx.beginPath();
               ctx.moveTo(particles[i].x, particles[i].y);
               ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(10,10,10,${0.07 * (1 - dist / MAX_DIST)})`;
+              ctx.strokeStyle = `rgba(255,255,255,${0.12 * (1 - dist / MAX_DIST)})`;
               ctx.lineWidth   = 0.6;
               ctx.stroke();
             }
@@ -424,7 +435,7 @@
         particles.forEach(p => {
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(10,10,10,0.25)';
+          ctx.fillStyle = 'rgba(255,255,255,0.3)';
           ctx.fill();
         });
 
