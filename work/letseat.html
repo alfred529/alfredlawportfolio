@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LetsEat — Alfred Law</title>
+  <meta name="description" content="LetsEat: a self-initiated dine-in menu app concept for a post-COVID world — QR scan, no app install, consistent experience across every restaurant. UX/UI case study by Alfred Law." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Case nav ── */
+    .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-ink-3); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-ink); }
+
+    /* ── Hero ── */
+    .cs-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
+    .hero-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .hero-tag { font-size: var(--size-xs); font-weight: 500; letter-spacing: .06em; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border); color: var(--color-ink-2); }
+    .hero-tag--filled { background: var(--color-surface); }
+    .hero-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: var(--color-ink); margin-bottom: var(--space-3); }
+    .hero-h1 em { font-style: italic; }
+    .hero-lead { font-size: var(--size-md); line-height: 1.75; color: var(--color-ink-2); max-width: 60ch; margin-bottom: var(--space-8); }
+    .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+    .hero-meta-item { padding-right: var(--space-6); padding-bottom: var(--space-2); }
+    .meta-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 5px; max-width: none; }
+    .meta-value { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); max-width: none; line-height: 1.4; }
+
+    /* ── Stat row ── */
+    .stat-row { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--color-border); }
+    .stat-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .stat-desc { font-size: var(--size-sm); color: var(--color-ink-3); max-width: none; }
+
+    /* ── Sections ── */
+    .cs-section { padding: var(--space-12) 0; border-bottom: 1px solid var(--color-border); }
+    .cs-section:last-child { border-bottom: none; }
+    .cs-section--surface { background: var(--color-surface); }
+    .cs-section h2 { margin-bottom: var(--space-3); }
+    .cs-section p  { margin-bottom: var(--space-3); }
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
+
+    /* ── 2-col grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+
+    /* ── Blockquote ── */
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
+
+    /* ── Insight cards ── */
+    .insight-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-top: var(--space-6); }
+    .insight-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .insight-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: var(--space-2); }
+    .insight-finding { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-2); line-height: 1.4; max-width: none; }
+    .insight-implication { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; padding-top: var(--space-2); border-top: 1px solid var(--color-border); }
+    .insight-implication strong { color: var(--color-ink-2); }
+
+    /* ── Decisions ── */
+    .decision { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--color-border); padding: var(--space-6) 0; }
+    .decision:last-child { border-bottom: 1px solid var(--color-border); }
+    .d-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: 6px; }
+    .d-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); padding-right: var(--space-4); }
+    .d-chosen { display: inline-flex; align-items: center; gap: 5px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 3px 11px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .d-rationale { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; margin-bottom: var(--space-2); }
+    .d-rejected { padding-top: var(--space-2); border-top: 1px solid var(--color-border); font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+    .d-rejected strong { color: var(--color-ink-2); }
+
+    /* ── Phone screens ── */
+    .screens-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: var(--space-3); margin-top: var(--space-6); align-items: end; }
+    .screen-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .screen-thumb { aspect-ratio: 9/17; background: var(--color-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); position: relative; overflow: hidden; }
+    .screen-badge { position: absolute; bottom: 9px; left: 9px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-ink); background: var(--color-bg); border: 1px solid var(--color-border); padding: 2px 8px; border-radius: 100px; }
+    .screen-info { padding: 12px 14px; }
+    .screen-name { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 3px; }
+    .screen-desc { font-size: 11px; color: var(--color-ink-3); line-height: 1.5; }
+
+    /* Phone mockup shared */
+    .mp { width: 72%; background: #fff; border: 1px solid #E2E2E2; border-radius: 10px; overflow: hidden; box-shadow: 0 3px 14px rgba(0,0,0,.06); }
+    .mp-sb { height: 10px; background: #fff; border-bottom: 1px solid #F0F0F0; display: flex; align-items: center; justify-content: flex-end; padding: 0 6px; gap: 3px; }
+    .mp-sb-dot { width: 4px; height: 4px; border-radius: 50%; background: #E2E2E2; }
+    .mp-nav { background: #fff; border-bottom: 1px solid #F0F0F0; padding: 5px 7px; display: flex; align-items: center; justify-content: space-between; }
+    .mp-logo { font-family: 'Playfair Display', serif; font-size: 8px; font-weight: 700; color: #0A0A0A; }
+    /* QR screen */
+    .mp-qr-body { padding: 10px 8px; display: flex; flex-direction: column; align-items: center; }
+    .mp-qr-title { font-size: 8px; font-weight: 700; color: #0A0A0A; text-align: center; margin-bottom: 4px; }
+    .mp-qr-sub { font-size: 5px; color: #888; text-align: center; margin-bottom: 8px; line-height: 1.5; }
+    .mp-qr-box { width: 50px; height: 50px; border: 1.5px solid #0A0A0A; display: grid; grid-template-columns: repeat(5,1fr); grid-template-rows: repeat(5,1fr); gap: 2px; padding: 3px; margin-bottom: 8px; }
+    .mp-qr-cell { background: #0A0A0A; border-radius: 1px; }
+    .mp-qr-cell.empty { background: transparent; }
+    .mp-qr-btn { background: #0A0A0A; color: #fff; font-size: 6px; font-weight: 700; padding: 4px 12px; border-radius: 100px; }
+    /* Restaurant home */
+    .mp-hero-img { height: 36px; background: linear-gradient(135deg,#E2E2E2 0%,#F7F7F7 100%); display: flex; align-items: center; justify-content: center; }
+    .mp-hero-label { font-size: 5px; color: #888; letter-spacing: .06em; text-transform: uppercase; }
+    .mp-rest-info { padding: 5px 7px; border-bottom: 1px solid #F0F0F0; }
+    .mp-rest-name { font-family: 'Playfair Display', serif; font-size: 8px; font-weight: 700; color: #0A0A0A; margin-bottom: 1px; }
+    .mp-rest-desc { font-size: 4px; color: #888; line-height: 1.4; }
+    .mp-cat-tabs { display: flex; gap: 2px; padding: 4px 6px; border-bottom: 1px solid #F0F0F0; overflow: hidden; }
+    .mp-cat { font-size: 5px; padding: 2px 6px; border-radius: 100px; border: 1px solid #E2E2E2; color: #888; white-space: nowrap; }
+    .mp-cat.on { background: #0A0A0A; color: #fff; border-color: #0A0A0A; }
+    /* Menu list */
+    .mp-menu-item { display: flex; align-items: center; gap: 5px; padding: 5px 7px; border-bottom: 1px solid #F0F0F0; }
+    .mp-item-img { width: 22px; height: 22px; background: #F0F0F0; border-radius: 2px; flex-shrink: 0; }
+    .mp-item-body { flex: 1; }
+    .mp-item-name { font-size: 6px; font-weight: 600; color: #0A0A0A; margin-bottom: 1px; }
+    .mp-item-desc { font-size: 4px; color: #888; line-height: 1.3; margin-bottom: 1px; }
+    .mp-item-price { font-size: 6px; font-weight: 700; color: #0A0A0A; }
+    .mp-item-add { font-size: 10px; color: #888; flex-shrink: 0; }
+    /* Selected item */
+    .mp-menu-item.selected { background: #F7F7F7; }
+    .mp-item-badge { width: 14px; height: 14px; background: #0A0A0A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 6px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    /* Bottom drawer collapsed */
+    .mp-drawer-collapsed { background: #0A0A0A; margin: 6px; border-radius: 6px; padding: 5px 8px; display: flex; align-items: center; justify-content: space-between; }
+    .mp-drawer-count { font-size: 5px; color: rgba(255,255,255,.6); margin-bottom: 1px; }
+    .mp-drawer-total { font-size: 7px; font-weight: 700; color: #fff; }
+    .mp-drawer-btn { font-size: 5px; font-weight: 700; color: #0A0A0A; background: #fff; border-radius: 100px; padding: 3px 7px; white-space: nowrap; }
+    /* Drawer expanded */
+    .mp-drawer-exp { background: #fff; border-top: 1.5px solid #0A0A0A; }
+    .mp-drawer-handle { height: 12px; display: flex; align-items: center; justify-content: center; }
+    .mp-drawer-pill { width: 20px; height: 2px; background: #E2E2E2; border-radius: 2px; }
+    .mp-drawer-header { padding: 0 7px 4px; border-bottom: 1px solid #F0F0F0; }
+    .mp-drawer-title { font-size: 7px; font-weight: 700; color: #0A0A0A; margin-bottom: 1px; }
+    .mp-drawer-subtitle { font-size: 4px; color: #888; }
+    .mp-drawer-row { display: flex; align-items: center; justify-content: space-between; padding: 4px 7px; border-bottom: 1px solid #F0F0F0; }
+    .mp-drawer-item-name { font-size: 6px; color: #0A0A0A; font-weight: 500; }
+    .mp-drawer-qty { display: flex; align-items: center; gap: 3px; }
+    .mp-drawer-minus { width: 10px; height: 10px; border: 1px solid #E2E2E2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #888; }
+    .mp-drawer-plus { width: 10px; height: 10px; border: 1px solid #E2E2E2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #888; }
+    .mp-drawer-n { font-size: 6px; font-weight: 700; color: #0A0A0A; }
+    .mp-drawer-footer { padding: 5px 7px; }
+    .mp-drawer-cta { background: #0A0A0A; color: #fff; font-size: 6px; font-weight: 700; text-align: center; padding: 5px; border-radius: 100px; }
+
+    /* ── Process steps ── */
+    .process-steps { margin-top: var(--space-4); }
+    .process-step { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); align-items: start; }
+    .process-step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--font-display); font-size: var(--size-lg); font-weight: 700; color: var(--color-border); line-height: 1.2; }
+    .step-title { font-size: var(--size-sm); font-weight: 700; color: var(--color-ink); margin-bottom: 5px; max-width: none; }
+    .step-desc { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+
+    /* ── Learning callout ── */
+    .learning { background: var(--color-surface); border-left: 2px solid var(--color-ink); padding: var(--space-4); margin: var(--space-4) 0; }
+    .learning-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-1); max-width: none; }
+    .learning-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+    .learning-body strong { color: var(--color-ink); }
+
+    /* ── Scope note ── */
+    .scope-note { border: 1px solid var(--color-border); padding: var(--space-4); margin-top: var(--space-4); }
+    .scope-note-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-2); max-width: none; }
+    .scope-note-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+
+    /* ── Future grid ── */
+    .future-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4); }
+    .future-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .future-title { font-size: var(--size-sm); font-weight: 700; color: var(--color-ink); margin-bottom: 8px; max-width: none; }
+    .future-body { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Outcomes ── */
+    .outcomes-row { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .outcome-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .outcome-cell:last-child { border-right: none; }
+    .outcome-num { font-family: var(--font-display); font-size: 3.25rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .outcome-label { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .outcome-detail { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1000px) {
+      .screens-grid { grid-template-columns: repeat(3,1fr); }
+    }
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; gap: var(--space-6); }
+      .insight-grid { grid-template-columns: 1fr; }
+      .decision { grid-template-columns: 1fr; }
+      .d-title { padding-right: 0; margin-bottom: var(--space-2); }
+      .future-grid { grid-template-columns: 1fr; }
+      .outcomes-row { grid-template-columns: 1fr; }
+      .outcome-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .outcome-cell:last-child { border-bottom: none; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .screens-grid { grid-template-columns: repeat(2,1fr); }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .stat-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
+        <img src="../assets/images/AL.webp" alt="AL" />
+        <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../assets/alfred-law-resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
+      </ul>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">← All work</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="container">
+      <div class="hero-tags">
+        <span class="hero-tag hero-tag--filled">UX/UI · Self-initiated</span>
+        <span class="hero-tag">Mobile App · 2021</span>
+        <span class="hero-tag">Conceptual</span>
+      </div>
+      <h1 class="hero-h1 fade-up">One QR code.<br><em>Every restaurant's menu.</em></h1>
+      <p class="hero-lead fade-up">LetsEat is a self-initiated dine-in app concept I designed during the pandemic — a consistent, frictionless way for diners to browse any restaurant's menu from their own phone. No app download. No clunky mobile website. Just scan and browse.</p>
+      <div class="hero-meta fade-up">
+        <div class="hero-meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Solo UX/UI Designer</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Type</p>
+          <p class="meta-value">Self-initiated concept</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Platform</p>
+          <p class="meta-value">iOS · Android</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Year</p>
+          <p class="meta-value">2021</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Deliverable</p>
+          <p class="meta-value">High-fidelity prototype</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div>
+    <div class="container" style="padding-left:0;padding-right:0;max-width:100%;">
+      <div class="stat-row" style="max-width:var(--max-width);margin:0 auto;padding:0 var(--space-4);">
+        <div class="stat-cell" style="padding-left:0;">
+          <p class="stat-num">0</p>
+          <p class="stat-desc">App downloads required — browser-based, scan and go</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">2</p>
+          <p class="stat-desc">Key UX insights from paper prototype testing</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">3</p>
+          <p class="stat-desc">Design decisions that shaped the core interaction model</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">5</p>
+          <p class="stat-desc">Core screens designed end-to-end to hi-fi prototype</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">01 — Context</p>
+      <div class="grid-2">
+        <div>
+          <h2>Delivery apps unified the ordering experience. Dine-in didn't have an equivalent.</h2>
+          <p>Uber Eats and SkipTheDishes solved a real problem: they gave delivery customers a consistent, well-designed experience regardless of which restaurant they were ordering from. The dine-in equivalent didn't exist.</p>
+          <p>The pandemic accelerated a behaviour that was already emerging — restaurants printing QR codes and directing diners to their mobile websites. But each restaurant's site was different. Some were hard to navigate. Most weren't designed for mobile. None of them felt like a product.</p>
+        </div>
+        <div>
+          <p>LetsEat is the answer to that gap: a single app that any restaurant can plug their menu into, giving every diner a consistent, polished browsing experience — regardless of where they're eating.</p>
+          <blockquote>
+            <p>"Why does ordering delivery feel better than dining in? The food is supposed to be the good part."</p>
+          </blockquote>
+          <p>This was a self-initiated project — brainstormed and designed solo during the pandemic, without a client brief or product team. The constraints that framing imposed (limited research access, no real restaurant partners) are acknowledged honestly in the scope section below.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">02 — Problem</p>
+      <div class="grid-2">
+        <div>
+          <h2>Three problems — all pointing to the same gap.</h2>
+          <p>The move away from physical menus wasn't just a hygiene response. It revealed a deeper design problem that had existed long before the pandemic: the dine-in experience had never been given the same design attention as delivery.</p>
+        </div>
+        <div>
+          <div style="margin-top:0;">
+            <div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border);">
+              <p style="font-size:var(--size-sm);font-weight:700;color:var(--color-ink);margin-bottom:5px;max-width:none;">Hygiene</p>
+              <p style="font-size:var(--size-sm);color:var(--color-ink-2);max-width:none;margin:0;line-height:1.65;">Physical menus pass through dozens of hands between cleaning. Even before COVID, this was a real concern. The pandemic made it untenable.</p>
+            </div>
+            <div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border);">
+              <p style="font-size:var(--size-sm);font-weight:700;color:var(--color-ink);margin-bottom:5px;max-width:none;">Inconsistency</p>
+              <p style="font-size:var(--size-sm);color:var(--color-ink-2);max-width:none;margin:0;line-height:1.65;">Every restaurant's mobile website is different. Different navigation, different layouts, different levels of quality. There's no shared experience to learn once and apply everywhere.</p>
+            </div>
+            <div style="padding:var(--space-3) 0;">
+              <p style="font-size:var(--size-sm);font-weight:700;color:var(--color-ink);margin-bottom:5px;max-width:none;">Experience gap</p>
+              <p style="font-size:var(--size-sm);color:var(--color-ink-2);max-width:none;margin:0;line-height:1.65;">Delivery apps — Uber Eats, SkipTheDishes — have set a high bar for what browsing a menu feels like. Dine-in had nothing comparable. The same food, a worse experience.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">03 — Process</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Research first, then prototype fast.</h2>
+          <p>Without access to restaurant owners or a large testing pool, the process leaned heavily on two sources: competitive analysis of existing food ordering apps, and paper prototype testing with a small group of regular diners.</p>
+        </div>
+        <div>
+          <p>The constraints were real — no restaurant partners, limited user testing during lockdown — but they shaped a leaner, more focused process. Every decision had to be justifiable from either the competitive research or the testing feedback.</p>
+        </div>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <p class="step-num">1</p>
+          <div>
+            <p class="step-title">Competitive analysis — delivery app UX patterns</p>
+            <p class="step-desc">Analysed Uber Eats, SkipTheDishes, DoorDash, and direct restaurant apps to identify the interaction patterns users had already internalised. The goal wasn't to copy delivery — it was to understand the mental model users would bring to a dine-in equivalent and design with that context, not against it.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <p class="step-num">2</p>
+          <div>
+            <p class="step-title">User flowchart — mapping the dine-in journey</p>
+            <p class="step-desc">Mapped the end-to-end user flow from entering the app through to notifying the waiter. This step was important for surfacing moments where the digital experience intersected with physical dining — the QR scan, the waiter call — and designing those transitions intentionally rather than assuming they'd work.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <p class="step-num">3</p>
+          <div>
+            <p class="step-title">Paper prototype + user testing</p>
+            <p class="step-desc">Printed wireframes were tested with a small group of people who regularly dine out. Testing at low fidelity kept the focus on flow and interaction patterns rather than visual polish. Two significant insights emerged that changed the design direction — both documented in the insights section below.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <p class="step-num">4</p>
+          <div>
+            <p class="step-title">Moodboard + design direction</p>
+            <p class="step-desc">Established a black, white, and grey neutral palette — deliberately minimal so that the restaurant's own photography and food imagery could take the visual lead. The UI is the frame, not the subject.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <p class="step-num">5</p>
+          <div>
+            <p class="step-title">High-fidelity prototype</p>
+            <p class="step-desc">Translated the tested wireframes and design direction into a full hi-fi prototype covering the core five-screen user flow — from onboarding through to order summary and waiter notification.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHTS -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">04 — Testing insights</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Two findings from testing that changed the design.</h2>
+          <p>The paper prototype testing surfaced two clear, actionable insights — both rooted in existing mental models users had built from delivery apps. Both changed the design.</p>
+        </div>
+        <div>
+          <p>This is the value of low-fidelity testing: the findings are about interaction, not aesthetics. Users could tell you what felt wrong before the visual design had any chance to distract them.</p>
+        </div>
+      </div>
+      <div class="insight-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="insight-card">
+          <p class="insight-num">01</p>
+          <p class="insight-finding">Users expected a bottom drawer — not a top-right basket — for reviewing their order.</p>
+          <p class="insight-implication"><strong>Why it matters:</strong> Users had built a strong mental model from delivery apps where a persistent bottom sheet shows order details. A top-right basket icon required them to unlearn that pattern. The bottom drawer matches the existing expectation — less friction, faster comprehension.<br><br><strong>Design response:</strong> Replaced the basket with a persistent bottom drawer that appears when the first item is selected, can be expanded for full order details, and collapsed to stay out of the way while browsing.</p>
+        </div>
+        <div class="insight-card">
+          <p class="insight-num">02</p>
+          <p class="insight-finding">Users wanted to see how many of each item they'd selected — directly on the menu item, not just as a basket total.</p>
+          <p class="insight-implication"><strong>Why it matters:</strong> A number badge on a basket icon tells you how many items total. It doesn't tell you how many of this specific dish you've added. When browsing a long menu, that distinction matters — users were second-guessing themselves unnecessarily.<br><br><strong>Design response:</strong> Added a quantity badge directly on each menu item when it's been selected. The basket count still exists, but the per-item indicator reduces cognitive switching between the menu and the order summary.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">05 — Design decisions</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Three decisions that shaped the core experience.</h2>
+        </div>
+        <div>
+          <p>Each decision was driven by either the competitive research, the testing insights, or a conscious constraint about what the product needed to be for restaurants and diners alike.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="decision">
+          <div>
+            <p class="d-num">01</p>
+            <p class="d-title">Bottom drawer over top basket</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Persistent bottom drawer</span>
+            <p class="d-rationale">The bottom drawer pattern is established in delivery apps — users already know how to interact with it. It provides more real estate for order details when expanded, collapses cleanly when not needed, and keeps users oriented in the menu without navigating away. It matches the way people actually think about building an order: incrementally, with the ability to check back without losing their place.</p>
+            <p class="d-rejected"><strong>Rejected:</strong> Top-right basket icon with badge counter. Testing showed users instinctively looked for the bottom drawer and were momentarily confused by the basket placement — even though it's a familiar pattern from e-commerce. The delivery app mental model was stronger.</p>
+          </div>
+        </div>
+
+        <div class="decision">
+          <div>
+            <p class="d-num">02</p>
+            <p class="d-title">Neutral B&W palette</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Black, white, and grey UI</span>
+            <p class="d-rationale">LetsEat is infrastructure for restaurants — it needs to work for a French bistro, a ramen bar, a pizza chain, and a fine dining venue without feeling out of place in any of them. A strong branded color would compete with the restaurant's own identity. A neutral palette becomes an invisible frame, letting the restaurant's photography and food take center stage. The product disappears into the background — which is exactly what a platform should do.</p>
+            <p class="d-rejected"><strong>Rejected:</strong> A branded accent color. Tested several warm and cool accent options during the moodboard phase — all of them created tension with certain restaurant photography styles. Neutral was the only option that worked universally.</p>
+          </div>
+        </div>
+
+        <div class="decision">
+          <div>
+            <p class="d-num">03</p>
+            <p class="d-title">Browser-based — no app install</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Progressive web app via QR scan</span>
+            <p class="d-rationale">Requiring a diner to download an app before they can see a menu is too high a barrier. The whole premise of LetsEat is frictionless access — scan, browse, order. A native app install breaks that. A browser-based experience means the QR code is the only thing a restaurant needs to provide, and the first-time experience is instant. Repeat diners would benefit from a native install, but it should never be required.</p>
+            <p class="d-rejected"><strong>Not considered viable:</strong> Native app install as a prerequisite. The ask — "download an app to see this menu" — would drive diners back to asking for a physical menu. Adoption depends on zero friction for first-time users.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">06 — Key screens</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Five screens. One end-to-end flow.</h2>
+          <p>The core user journey — from QR scan to waiter notification — is covered in five screens. Each screen has a single primary job, and the transitions between them are intentional.</p>
+        </div>
+        <div>
+          <p>The hi-fi prototype was designed to give stakeholders and restaurant partners a tangible sense of the experience — and to pressure-test the interaction decisions from testing before any development investment.</p>
+        </div>
+      </div>
+
+      <div class="screens-grid">
+
+        <!-- Screen 1: Onboarding/QR -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-nav"><span class="mp-logo">LetsEat</span></div>
+              <div class="mp-qr-body">
+                <p class="mp-qr-title">Welcome to LetsEat</p>
+                <p class="mp-qr-sub">Scan the QR code at your table to view the restaurant's menu</p>
+                <div class="mp-qr-box">
+                  <div class="mp-qr-cell"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell empty"></div><div class="mp-qr-cell"></div>
+                  <div class="mp-qr-cell"></div><div class="mp-qr-cell empty"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell empty"></div>
+                  <div class="mp-qr-cell"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell empty"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell"></div>
+                  <div class="mp-qr-cell empty"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell empty"></div><div class="mp-qr-cell"></div>
+                  <div class="mp-qr-cell"></div><div class="mp-qr-cell empty"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell"></div><div class="mp-qr-cell"></div>
+                </div>
+                <button class="mp-qr-btn">Scan QR Code</button>
+              </div>
+            </div>
+            <span class="screen-badge">Onboarding</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">QR scan</p>
+            <p class="screen-desc">One-time onboarding. Scan the table QR — no signup, no install.</p>
+          </div>
+        </div>
+
+        <!-- Screen 2: Restaurant home -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-hero-img"><span class="mp-hero-label">Restaurant photo</span></div>
+              <div class="mp-rest-info">
+                <div class="mp-rest-name">The Grove</div>
+                <div class="mp-rest-desc">Modern Canadian cuisine · Open until 10pm</div>
+              </div>
+              <div class="mp-cat-tabs">
+                <div class="mp-cat on">Starters</div>
+                <div class="mp-cat">Mains</div>
+                <div class="mp-cat">Desserts</div>
+                <div class="mp-cat">Drinks</div>
+              </div>
+              <div class="mp-menu-item">
+                <div class="mp-item-img"></div>
+                <div class="mp-item-body">
+                  <div class="mp-item-name">Burrata</div>
+                  <div class="mp-item-desc">Fresh tomato, basil oil</div>
+                  <div class="mp-item-price">$14</div>
+                </div>
+                <div class="mp-item-add">+</div>
+              </div>
+              <div class="mp-menu-item">
+                <div class="mp-item-img"></div>
+                <div class="mp-item-body">
+                  <div class="mp-item-name">Beef Tartare</div>
+                  <div class="mp-item-desc">Capers, quail egg, crostini</div>
+                  <div class="mp-item-price">$18</div>
+                </div>
+                <div class="mp-item-add">+</div>
+              </div>
+            </div>
+            <span class="screen-badge">Restaurant home</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Restaurant page</p>
+            <p class="screen-desc">Hero image + short description, then category nav and items below.</p>
+          </div>
+        </div>
+
+        <!-- Screen 3: Item selected + drawer collapsed -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-cat-tabs" style="border-bottom:1px solid #F0F0F0;">
+                <div class="mp-cat on">Starters</div>
+                <div class="mp-cat">Mains</div>
+                <div class="mp-cat">Desserts</div>
+              </div>
+              <div class="mp-menu-item selected">
+                <div class="mp-item-img"></div>
+                <div class="mp-item-body">
+                  <div class="mp-item-name">Burrata</div>
+                  <div class="mp-item-desc">Fresh tomato, basil oil</div>
+                  <div class="mp-item-price">$14</div>
+                </div>
+                <div class="mp-item-badge">1</div>
+              </div>
+              <div class="mp-menu-item">
+                <div class="mp-item-img"></div>
+                <div class="mp-item-body">
+                  <div class="mp-item-name">Beef Tartare</div>
+                  <div class="mp-item-desc">Capers, quail egg, crostini</div>
+                  <div class="mp-item-price">$18</div>
+                </div>
+                <div class="mp-item-add">+</div>
+              </div>
+              <div class="mp-menu-item">
+                <div class="mp-item-img"></div>
+                <div class="mp-item-body">
+                  <div class="mp-item-name">Caesar Salad</div>
+                  <div class="mp-item-desc">Anchovy, parmesan, croutons</div>
+                  <div class="mp-item-price">$16</div>
+                </div>
+                <div class="mp-item-add">+</div>
+              </div>
+              <div style="flex:1;"></div>
+              <div class="mp-drawer-collapsed">
+                <div>
+                  <div class="mp-drawer-count">1 item selected</div>
+                  <div class="mp-drawer-total">$14.00</div>
+                </div>
+                <div class="mp-drawer-btn">View order ↑</div>
+              </div>
+            </div>
+            <span class="screen-badge">Item selected</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Selection state</p>
+            <p class="screen-desc">Per-item badge shows quantity. Bottom drawer appears with running total.</p>
+          </div>
+        </div>
+
+        <!-- Screen 4: Drawer expanded -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-cat-tabs" style="opacity:.4;">
+                <div class="mp-cat on">Starters</div>
+                <div class="mp-cat">Mains</div>
+                <div class="mp-cat">Desserts</div>
+              </div>
+              <div class="mp-menu-item" style="opacity:.4;">
+                <div class="mp-item-img"></div>
+                <div class="mp-item-body"><div class="mp-item-name">Burrata</div><div class="mp-item-price">$14</div></div>
+              </div>
+              <div class="mp-drawer-exp">
+                <div class="mp-drawer-handle"><div class="mp-drawer-pill"></div></div>
+                <div class="mp-drawer-header">
+                  <div class="mp-drawer-title">Your order</div>
+                  <div class="mp-drawer-subtitle">Table 7 · 2 items</div>
+                </div>
+                <div class="mp-drawer-row">
+                  <span class="mp-drawer-item-name">Burrata</span>
+                  <div class="mp-drawer-qty">
+                    <div class="mp-drawer-minus">−</div>
+                    <span class="mp-drawer-n">1</span>
+                    <div class="mp-drawer-plus">+</div>
+                  </div>
+                </div>
+                <div class="mp-drawer-row">
+                  <span class="mp-drawer-item-name">Beef Tartare</span>
+                  <div class="mp-drawer-qty">
+                    <div class="mp-drawer-minus">−</div>
+                    <span class="mp-drawer-n">1</span>
+                    <div class="mp-drawer-plus">+</div>
+                  </div>
+                </div>
+                <div class="mp-drawer-row" style="border:none;justify-content:space-between;">
+                  <span style="font-size:6px;font-weight:700;color:#0A0A0A;">Total</span>
+                  <span style="font-size:7px;font-weight:700;color:#0A0A0A;">$32.00</span>
+                </div>
+                <div class="mp-drawer-footer">
+                  <div class="mp-drawer-cta">Call waiter</div>
+                </div>
+              </div>
+            </div>
+            <span class="screen-badge">Order drawer</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Order summary</p>
+            <p class="screen-desc">Drawer pulls up to reveal full order with qty controls and total.</p>
+          </div>
+        </div>
+
+        <!-- Screen 5: Waiter notified -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-nav"><span class="mp-logo">LetsEat</span></div>
+              <div style="padding:16px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+                <div style="width:36px;height:36px;border:1.5px solid #0A0A0A;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:8px;">✓</div>
+                <div style="font-family:'Playfair Display',serif;font-size:9px;font-weight:700;color:#0A0A0A;margin-bottom:4px;line-height:1.3;">Your waiter is<br>on the way</div>
+                <div style="font-size:5px;color:#888;line-height:1.5;margin-bottom:10px;">Table 7 · 2 items · $32.00</div>
+                <div style="font-size:5px;color:#888;border-top:1px solid #E2E2E2;width:100%;padding-top:8px;">Your order summary</div>
+                <div style="width:100%;padding:4px 0;">
+                  <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #F0F0F0;"><span style="font-size:5px;color:#444;">Burrata × 1</span><span style="font-size:5px;font-weight:700;color:#0A0A0A;">$14</span></div>
+                  <div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="font-size:5px;color:#444;">Beef Tartare × 1</span><span style="font-size:5px;font-weight:700;color:#0A0A0A;">$18</span></div>
+                </div>
+              </div>
+            </div>
+            <span class="screen-badge">Confirmation</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Waiter notification</p>
+            <p class="screen-desc">Clear confirmation state. Order summary displayed for reference at the table.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SCOPE -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">07 — Scope &amp; constraints</p>
+      <div class="grid-2">
+        <div>
+          <h2>What this project is — and what it isn't.</h2>
+          <p>LetsEat is a conceptual project, not a shipped product. It was self-initiated during the pandemic, without restaurant partners, a client, or a development team. That context is worth naming clearly — and the constraints it imposed were real.</p>
+          <p>Restaurant owner research was not possible during the project. Owners were managing closures, pivots to takeout, and constant regulation changes. They weren't available for interviews, and their priorities were nowhere near digital menu design.</p>
+        </div>
+        <div>
+          <p>User testing was limited to a small group of friends and family — people who dine out regularly but represent a narrow slice of the actual user population. The insights are valid, but the sample size makes them directional rather than conclusive.</p>
+          <div class="scope-note">
+            <p class="scope-note-label">Why I'm including this project</p>
+            <p class="scope-note-body">Conceptual projects reveal how a designer thinks when there's no brief, no client, and no one telling them what to build. This project shows problem identification, competitive research, iterative prototyping, and the ability to translate testing feedback into concrete design decisions — all self-directed. The constraints are honest; the process is real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUTURE -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">08 — Future opportunities</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Where LetsEat could go next.</h2>
+          <p>The current concept handles the core menu browsing and order notification flow. There are three clear directions for expansion — each with interesting design challenges and tradeoffs worth exploring.</p>
+        </div>
+        <div>
+          <p>The most interesting tension in the roadmap is the direct ordering question. It's more efficient — but it changes the social dynamic of dining out in ways that deserve careful research before assuming it's the right move.</p>
+        </div>
+      </div>
+      <div class="future-grid">
+        <div class="future-card">
+          <p class="future-title">Direct ordering</p>
+          <p class="future-body">Allowing diners to place orders directly through the app — without calling a waiter — is the obvious efficiency gain. But it removes a social touchpoint that's part of the dining experience. The right answer probably varies by restaurant type: quick-service vs. fine dining have very different needs. This deserves research before designing.</p>
+        </div>
+        <div class="future-card">
+          <p class="future-title">Takeout + pager mode</p>
+          <p class="future-body">LetsEat could extend to in-person takeout: browse the menu, place your order, and receive a pager notification when it's ready — allowing you to walk around rather than wait at the counter. The same core app, a different context of use. The primary design challenge is the status communication between kitchen and customer.</p>
+        </div>
+        <div class="future-card">
+          <p class="future-title">Restaurant owner tools</p>
+          <p class="future-body">The diner experience is only half the product. Restaurant owners need to be able to publish and update their menu without engineering help. A companion CMS — simple enough for a restaurant owner to use between services — is a prerequisite for real adoption and the most underexplored part of the current concept.</p>
+        </div>
+      </div>
+
+      <div class="learning" style="margin-top:var(--space-6);">
+        <p class="learning-label">The question I'd most want to answer</p>
+        <p class="learning-body"><strong>How do restaurant owners actually want to manage their menu content?</strong> The diner-facing experience is designed. What's missing is the supply side — understanding the operational reality of keeping a digital menu accurate and current. That research would determine whether LetsEat is a viable product or a useful prototype of an idea.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">09 — Reflection</p>
+      <div class="grid-2">
+        <div>
+          <h2>What I'd do differently.</h2>
+          <p>The competitive analysis focused almost entirely on delivery apps — because that was accessible research. I'd expand that to include table-ordering systems used by restaurants (Square, Toast, Lightspeed) to understand the operational constraints on the restaurant side, not just the consumer experience.</p>
+          <p>I'd also run a second round of testing after the hi-fi prototype was complete — specifically testing the bottom drawer interaction at higher fidelity to confirm it worked as well as it did on paper. Wireframe testing validates the concept; prototype testing validates the execution.</p>
+        </div>
+        <div>
+          <h2>What this project taught me.</h2>
+          <p>Self-initiated projects are a different kind of challenge. Without a client or product team, every decision — what to build, what to cut, when to stop — is yours. That's not just a design exercise; it's a product instinct exercise.</p>
+          <p>The strongest outcome from this project wasn't the prototype — it was the clarity about what the product needed to be. A platform that disappears into the background, lets the restaurant's food take center stage, and respects the social context of dining out. Those three things shaped every visual and interaction decision, and they came from thinking carefully about the problem rather than jumping to solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
