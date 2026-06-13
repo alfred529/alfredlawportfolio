@@ -87,11 +87,23 @@
     .priority-row { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--space-2); margin-top: var(--space-4); }
     .priority-cell { padding: var(--space-3) var(--space-3); border: 1px solid var(--color-border); }
     .priority-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; margin-bottom: var(--space-2); }
-    .p-immediate { background: #0A0A0A; color: #fff; }
-    .p-high { background: #444; color: #fff; }
-    .p-medium { background: #888; color: #fff; }
-    .p-low { background: var(--color-surface); color: var(--color-ink-2); border: 1px solid var(--color-border); }
+    .p-immediate { background: #9A3477; color: #fff; }
+    .p-high { background: #44347D; color: #fff; }
+    .p-medium { background: #3B6F97; color: #fff; }
+    .p-low { background: #3E6E45; color: #fff; }
     .priority-desc { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.5; max-width: none; margin: 0; }
+
+    /* ── Carousel ── */
+    .carousel { margin-top: var(--space-6); user-select: none; }
+    .carousel__track-wrap { overflow: hidden; border-radius: var(--radius-md); border: 1px solid var(--color-border); }
+    .carousel__track { display: flex; transition: transform 0.35s cubic-bezier(.4,0,.2,1); will-change: transform; }
+    .carousel__slide { flex: 0 0 100%; width: 100%; height: auto; display: block; object-fit: contain; }
+    .carousel__controls { display: flex; align-items: center; justify-content: center; gap: var(--space-3); margin-top: var(--space-4); }
+    .carousel__btn { background: none; border: 1px solid var(--color-border); border-radius: 100px; width: 36px; height: 36px; cursor: pointer; font-size: var(--size-md); color: var(--color-ink); display: flex; align-items: center; justify-content: center; transition: background var(--transition), color var(--transition); }
+    .carousel__btn:hover { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
+    .carousel__dots { display: flex; gap: 6px; align-items: center; }
+    .carousel__dot { width: 6px; height: 6px; border-radius: 100px; background: var(--color-border); border: none; padding: 0; cursor: pointer; transition: background var(--transition), width var(--transition); }
+    .carousel__dot.active { background: var(--color-ink); width: 18px; }
 
     /* ── Screens grid ── */
     .screens-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-4); margin-top: var(--space-6); align-items: start; }
@@ -366,6 +378,7 @@
       <h2>What 48 hours of focused discovery revealed.</h2>
       <p>We couldn't do traditional user research in a hackathon — no time for interviews, no access to real callers. What we could do was rapid secondary research, leverage our team's psychology expertise, and interview the Kids Help Phone stakeholders present at the event.</p>
 
+      <img src="../assets/images/pacific-wireframing.png" alt="Pacific wireframing" class="case-image" />
       <div class="insight-grid">
         <div class="insight-card">
           <div class="insight-num">01</div>
@@ -444,190 +457,36 @@
       <h2>Intake flow &amp; counselor dashboard.</h2>
       <p>The system runs in two environments simultaneously: a mobile-optimized intake experience for the child, and a desktop dashboard for the counselor. Both update in real time via WebSocket.</p>
 
-      <div class="screens-grid">
-
-        <!-- Screen 1: Age selector -->
-        <div class="screen-card">
-          <div class="screen-thumb screen-thumb--mobile">
-            <div class="mp">
-              <div class="mp-sb">
-                <div class="mp-sb-dot"></div>
-                <div class="mp-sb-dot"></div>
-                <div class="mp-sb-dot"></div>
-              </div>
-              <div class="mp-nav">
-                <span class="mp-logo-khp">Kids Help Phone</span>
-              </div>
-              <div class="mp-progress"><div class="mp-progress-fill" style="width:9%;"></div></div>
-              <div class="mp-intake-body">
-                <p class="mp-intake-step">Step 1 of 11</p>
-                <p class="mp-intake-q">How old are you?</p>
-                <button class="mp-age-btn selected"><span class="mp-age-emoji">🐣</span> 0 – 9</button>
-                <button class="mp-age-btn"><span class="mp-age-emoji">🌱</span> 10 – 19</button>
-                <button class="mp-age-btn"><span class="mp-age-emoji">🌳</span> 19 &amp; over</button>
-                <button class="mp-intake-next">Continue →</button>
-              </div>
-            </div>
-          </div>
-          <div class="screen-info">
-            <p class="screen-name">Age group selector</p>
-            <p class="screen-desc">Entry fork — routes to age-appropriate intake. Single large tap targets, friendly emoji cues.</p>
+      <div class="carousel" id="kidsCarousel">
+        <div class="carousel__track-wrap">
+          <div class="carousel__track">
+            <img src="../assets/images/pacific-kids1.png"  alt="Intake screen 1"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids2.png"  alt="Intake screen 2"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids3.png"  alt="Intake screen 3"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids4.png"  alt="Intake screen 4"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids5.png"  alt="Intake screen 5"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids6.png"  alt="Intake screen 6"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids7.png"  alt="Intake screen 7"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids8.png"  alt="Intake screen 8"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids9.png"  alt="Intake screen 9"  class="carousel__slide" />
+            <img src="../assets/images/pacific-kids10.png" alt="Intake screen 10" class="carousel__slide" />
+            <img src="../assets/images/pacific-kids11.png" alt="Intake screen 11" class="carousel__slide" />
           </div>
         </div>
-
-        <!-- Screen 2: Mood assessment -->
-        <div class="screen-card">
-          <div class="screen-thumb screen-thumb--mobile">
-            <div class="mp">
-              <div class="mp-sb">
-                <div class="mp-sb-dot"></div>
-                <div class="mp-sb-dot"></div>
-                <div class="mp-sb-dot"></div>
-              </div>
-              <div class="mp-nav">
-                <span class="mp-logo-khp">Kids Help Phone</span>
-              </div>
-              <div class="mp-progress"><div class="mp-progress-fill" style="width:63%;"></div></div>
-              <div class="mp-mood-body">
-                <p class="mp-mood-label">Step 7 of 11</p>
-                <p class="mp-mood-q">How are you feeling right now?</p>
-                <div class="mp-mood-scale">
-                  <div class="mp-mood-dot">😊</div>
-                  <div class="mp-mood-dot">🙂</div>
-                  <div class="mp-mood-dot sel">😐</div>
-                  <div class="mp-mood-dot">😟</div>
-                  <div class="mp-mood-dot">😢</div>
-                </div>
-                <div class="mp-mood-ticks">
-                  <span class="mp-mood-tick">Happy</span>
-                  <span class="mp-mood-tick">Sad</span>
-                </div>
-                <p class="mp-safe-label" style="margin-top:8px;">Do you feel safe right now?</p>
-                <div class="mp-safe-scale">
-                  <div class="mp-safe-dot">✅</div>
-                  <div class="mp-safe-dot sel">🤔</div>
-                  <div class="mp-safe-dot">😰</div>
-                  <div class="mp-safe-dot">🆘</div>
-                  <div class="mp-safe-dot">🚨</div>
-                </div>
-                <button class="mp-intake-next" style="margin-top:10px;">Continue →</button>
-              </div>
-            </div>
-          </div>
-          <div class="screen-info">
-            <p class="screen-name">Mood &amp; safety assessment</p>
-            <p class="screen-desc">Dual-scale tap input. Data feeds directly into counselor's priority score in real time.</p>
-          </div>
+        <div class="carousel__controls">
+          <button class="carousel__btn carousel__btn--prev" aria-label="Previous">&#8592;</button>
+          <div class="carousel__dots" id="kidsCarouselDots"></div>
+          <button class="carousel__btn carousel__btn--next" aria-label="Next">&#8594;</button>
         </div>
-
-        <!-- Screen 3: Queue confirmation -->
-        <div class="screen-card">
-          <div class="screen-thumb screen-thumb--mobile">
-            <div class="mp">
-              <div class="mp-sb">
-                <div class="mp-sb-dot"></div>
-                <div class="mp-sb-dot"></div>
-                <div class="mp-sb-dot"></div>
-              </div>
-              <div class="mp-nav">
-                <span class="mp-logo-khp">Kids Help Phone</span>
-              </div>
-              <div class="mp-progress"><div class="mp-progress-fill" style="width:100%;"></div></div>
-              <div class="mp-confirm-body">
-                <div class="mp-confirm-icon">
-                  <span class="mp-confirm-check">✓</span>
-                </div>
-                <p class="mp-confirm-title">You're all set, Alex!</p>
-                <p class="mp-confirm-sub">A counselor will be with you soon.<br>You can play a game while you wait.</p>
-                <div class="mp-queue-badge">
-                  <div class="mp-queue-n">3</div>
-                  <p class="mp-queue-l">people ahead of you</p>
-                </div>
-                <p class="mp-confirm-cta">Want to play a quick game while you wait?</p>
-              </div>
-            </div>
-          </div>
-          <div class="screen-info">
-            <p class="screen-name">Queue confirmation</p>
-            <p class="screen-desc">Child sees real-time queue position. Optional game keeps them engaged and prevents dropout.</p>
-          </div>
-        </div>
-
       </div>
 
       <!-- Counselor dashboard full row -->
       <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-2);">Counselor dashboard</h3>
       <p style="margin-bottom: var(--space-4);">While the child moves through intake, the counselor's dashboard updates live — severity scores calculate automatically, the queue reorders, and each child's profile is ready before the session begins.</p>
 
-      <div style="display:flex;justify-content:center;padding:var(--space-6) var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);">
-        <div class="dash">
-          <div class="dash-titlebar">
-            <div class="dash-dot dash-dot--r"></div>
-            <div class="dash-dot dash-dot--y"></div>
-            <div class="dash-dot dash-dot--g"></div>
-          </div>
-          <div class="dash-header">
-            <span class="dash-brand">Pacific — Counselor Dashboard</span>
-            <span class="dash-greeting">Welcome back, Sarah · 4 in queue</span>
-          </div>
-          <div class="dash-body">
-            <div class="dash-sidebar">
-              <div class="dash-nav-item active">Queue</div>
-              <div class="dash-nav-item">Active Sessions</div>
-              <div class="dash-nav-item">Analytics</div>
-              <div class="dash-nav-item">Settings</div>
-            </div>
-            <div class="dash-main">
-              <div class="dash-stats">
-                <div class="dash-stat">
-                  <div class="dash-stat-n">4</div>
-                  <p class="dash-stat-l">In queue</p>
-                </div>
-                <div class="dash-stat">
-                  <div class="dash-stat-n">2</div>
-                  <p class="dash-stat-l">Active sessions</p>
-                </div>
-                <div class="dash-stat">
-                  <div class="dash-stat-n">~8m</div>
-                  <p class="dash-stat-l">Avg wait time</p>
-                </div>
-              </div>
-              <p class="dash-section-label">Current Queue — sorted by priority</p>
-              <div class="dash-queue">
-                <div class="dash-queue-header">
-                  <div class="dash-th">Name · Age</div>
-                  <div class="dash-th">Wait</div>
-                  <div class="dash-th">Mood</div>
-                  <div class="dash-th">Priority</div>
-                </div>
-                <div class="dash-row">
-                  <div class="dash-td dash-td--name">Alex, 8</div>
-                  <div class="dash-td">2m</div>
-                  <div class="dash-td">😰 Unsafe</div>
-                  <div class="dash-td"><span class="dash-badge dash-b-imm">Immediate</span></div>
-                </div>
-                <div class="dash-row">
-                  <div class="dash-td dash-td--name">Jordan, 7</div>
-                  <div class="dash-td">5m</div>
-                  <div class="dash-td">😟 Sad</div>
-                  <div class="dash-td"><span class="dash-badge dash-b-hi">High</span></div>
-                </div>
-                <div class="dash-row">
-                  <div class="dash-td dash-td--name">Sam, 9</div>
-                  <div class="dash-td">9m</div>
-                  <div class="dash-td">😐 Neutral</div>
-                  <div class="dash-td"><span class="dash-badge dash-b-med">Medium</span></div>
-                </div>
-                <div class="dash-row">
-                  <div class="dash-td dash-td--name">Casey, 6</div>
-                  <div class="dash-td">11m</div>
-                  <div class="dash-td">🙂 OK</div>
-                  <div class="dash-td"><span class="dash-badge dash-b-lo">Low</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+        <img src="../assets/images/pacific-dashboard1.png" alt="Pacific counselor dashboard — queue view" class="case-image" style="margin:0;" />
+        <img src="../assets/images/pacific-dashboard2.png" alt="Pacific counselor dashboard — caller profile" class="case-image" style="margin:0;" />
       </div>
 
       <!-- Priority legend -->
@@ -682,6 +541,8 @@
         <p class="learning-label">What made the collaboration work</p>
         <p class="learning-body">We ran a 30-minute design sprint at the start to align on the problem before anyone opened a design tool or wrote a line of code. <strong>That shared understanding meant developers weren't blocked waiting for specs — they understood the "why" well enough to make implementation decisions on their own.</strong></p>
       </div>
+
+      <img src="../assets/images/pacific-presenting1.png" alt="Pacific team presenting at hackathon" class="case-image" style="margin-top:var(--space-6);" />
     </div>
   </section>
 
@@ -714,6 +575,8 @@
         <p>"If we were to deploy this winning solution in the next few months, it would dramatically improve the experience that kids have."</p>
         <cite>— Ted Kaiser, Kids Help Phone</cite>
       </blockquote>
+
+      <img src="../assets/images/pacific-presenting2.png" alt="Pacific hackathon presentation" class="case-image" style="margin-top:var(--space-6);" />
     </div>
   </section>
 
@@ -757,5 +620,35 @@
   </footer>
 
   <script src="../script.js"></script>
+  <script>
+    (function () {
+      var carousel = document.getElementById('kidsCarousel');
+      if (!carousel) return;
+      var track = carousel.querySelector('.carousel__track');
+      var slides = carousel.querySelectorAll('.carousel__slide');
+      var dotsWrap = document.getElementById('kidsCarouselDots');
+      var total = slides.length;
+      var current = 0;
+
+      slides.forEach(function (_, i) {
+        var dot = document.createElement('button');
+        dot.className = 'carousel__dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', function () { goTo(i); });
+        dotsWrap.appendChild(dot);
+      });
+
+      function goTo(n) {
+        current = (n + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dotsWrap.querySelectorAll('.carousel__dot').forEach(function (d, i) {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      carousel.querySelector('.carousel__btn--prev').addEventListener('click', function () { goTo(current - 1); });
+      carousel.querySelector('.carousel__btn--next').addEventListener('click', function () { goTo(current + 1); });
+    })();
+  </script>
 </body>
 </html>
