@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/webp" href="../assets/images/AL.webp" />
   <title>SousChef — Alfred Law</title>
-  <meta name="description" content="SousChef: an AI-powered recipe collection app for iOS and Android. A 3-day solo design sprint by Alfred Law." />
+  <meta name="description" content="SousChef: an AI-powered recipe collection web app. Designed in a 3-day sprint and built with Claude Code by Alfred Law." />
   <link rel="stylesheet" href="../style.css" />
   <style>
     /* ── Case nav ── */
@@ -131,6 +131,12 @@
     .outcome-num sup { font-size: 1.5rem; }
     .outcome-label { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
     .outcome-detail { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Role list ── */
+    .role-list { list-style: none; }
+    .role-list li { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.6; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: baseline; gap: var(--space-2); }
+    .role-list li:last-child { border-bottom: none; }
+    .role-list li::before { content: '—'; color: var(--color-ink-3); flex-shrink: 0; font-size: var(--size-xs); }
 
     /* ── Learnings ── */
     .learnings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4); }
@@ -306,17 +312,17 @@
     <div class="container">
       <div class="hero-tags">
         <span class="hero-tag hero-tag--filled">Senior Product Designer</span>
-        <span class="hero-tag">3-day sprint · 2026</span>
+        <span class="hero-tag">Sprint → Shipped · 2026</span>
       </div>
       <h1 class="hero-h1 fade-up">From screenshot<br>to recipe, <em>instantly.</em></h1>
-      <p class="hero-lead fade-up">Sous Chef is a recipe collection app for iOS and Android that captures recipes from any source — URLs, YouTube videos, screenshots, PDFs — and saves them as structured files in Google Drive. Designed solo in 3 days as an AI-assisted portfolio case study.</p>
+      <p class="hero-lead fade-up">Sous Chef is a recipe collection app that captures recipes from any source — URLs, YouTube videos, screenshots, PDFs — and structures them for easy retrieval and cooking. Designed in a 3-day AI-assisted sprint, then built and deployed as a live product.</p>
       <div class="fade-up" style="margin-bottom:var(--space-6);">
         <a href="https://souschef-sepia.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Try the live app →</a>
       </div>
       <div class="hero-meta fade-up">
         <div class="hero-meta-item">
           <p class="meta-label">Role</p>
-          <p class="meta-value">Solo product designer</p>
+          <p class="meta-value">Product designer · Built with Claude Code</p>
         </div>
         <div class="hero-meta-item">
           <p class="meta-label">Duration</p>
@@ -324,7 +330,7 @@
         </div>
         <div class="hero-meta-item">
           <p class="meta-label">Platform</p>
-          <p class="meta-value">iOS · Android · iPadOS</p>
+          <p class="meta-value">Responsive Web App</p>
         </div>
         <div class="hero-meta-item">
           <p class="meta-label">AI collaborator</p>
@@ -344,15 +350,15 @@
       <div class="stat-row" style="max-width:var(--max-width);margin:0 auto;padding:0 var(--space-4);">
         <div class="stat-cell">
           <p class="stat-num">8</p>
-          <p class="stat-desc">Interactive screens built</p>
+          <p class="stat-desc">Screens designed and shipped in the live product</p>
         </div>
         <div class="stat-cell">
           <p class="stat-num">4</p>
-          <p class="stat-desc">Key design decisions documented</p>
+          <p class="stat-desc">Core design decisions — each traceable to a research finding</p>
         </div>
         <div class="stat-cell">
-          <p class="stat-num">3×</p>
-          <p class="stat-desc">Target increase in cook-through rate</p>
+          <p class="stat-num">0</p>
+          <p class="stat-desc">Manual data entry — all ingredients, steps, and tags extracted by AI</p>
         </div>
       </div>
     </div>
@@ -887,29 +893,28 @@
       <p class="eyebrow">06 — Outcomes</p>
       <div class="grid-2" style="margin-bottom:var(--space-8);align-items:start;">
         <div>
-          <h2>What the sprint produced.</h2>
-          <p>A complete research foundation, a documented design system, and a fully interactive 8-screen prototype — all with design decisions traceable back to specific research findings.</p>
+          <h2>Sprint to shipped product.</h2>
+          <p>The sprint produced a research foundation, design system, and 8-screen prototype with every decision traceable to a user insight. Then the app was built and deployed — validating that the design logic held up in production.</p>
         </div>
         <div>
-          <p>The three most important outputs weren't the screens themselves. They were the confidence-routing decision, the per-field uncertainty model, and the cook mode as the direct response to the "long dormancy" insight from the journey map.</p>
-          <p>Each can be validated independently in development, making the handoff unusually tractable.</p>
+          <p>The three decisions that mattered most — confidence-based routing, named pipeline steps, and per-field uncertainty flags — all shipped without modification. Designing the logic precisely enough to prototype it made the implementation spec unusually clear.</p>
         </div>
       </div>
       <div class="outcomes-grid">
         <div class="outcome-cell">
-          <p class="outcome-num">3<sup>×</sup></p>
-          <p class="outcome-label">Target cook-through rate</p>
-          <p class="outcome-detail">Benchmarked against current state — recipes saved but never cooked. Cook mode directly addresses the dormancy problem identified in research.</p>
+          <p class="outcome-num">✓</p>
+          <p class="outcome-label">Confidence routing shipped</p>
+          <p class="outcome-detail">The silent routing model — auto-save at ≥80% confidence, review screen below — shipped as designed. No user configuration required in the live product.</p>
         </div>
         <div class="outcome-cell">
           <p class="outcome-num">5<sup>s</sup></p>
-          <p class="outcome-label">Target max capture time</p>
-          <p class="outcome-detail">From launching the app to extraction initiated. Priya's primary need — zero tolerance for friction at the capture moment.</p>
+          <p class="outcome-label">Max capture time — validated</p>
+          <p class="outcome-detail">From opening the app to extraction initiated. Achieved in the live product across URL, screenshot, and YouTube source types.</p>
         </div>
         <div class="outcome-cell">
           <p class="outcome-num">0</p>
-          <p class="outcome-label">Manual data entry required</p>
-          <p class="outcome-detail">All structured data — ingredients, steps, tags, metadata — is extracted by the AI agent. The user's job is review, not input.</p>
+          <p class="outcome-label">Manual data entry — confirmed</p>
+          <p class="outcome-detail">All structured data — ingredients, steps, tags, metadata — extracted by the AI pipeline. Validated end-to-end in the deployed product.</p>
         </div>
       </div>
     </div>
@@ -960,8 +965,8 @@
           </div>
           <div class="learning">
             <p class="learning-n">→</p>
-            <p class="learning-title">"Availability on iPad would be nice — bigger screen, cooking at home."</p>
-            <p class="learning-body">The larger iPad canvas changes the layout contract significantly: the recipe detail and cook mode screens could show ingredients and steps side-by-side rather than stacked. iPadOS is added to the platform scope; the component system was built to support this without redesign.</p>
+            <p class="learning-title">"Availability on a bigger screen would be nice — cooking at home."</p>
+            <p class="learning-body">The app is a responsive web app, so larger screens are already supported. The recipe detail and cook mode screens benefit significantly from more canvas — ingredients and steps can sit side-by-side rather than stacked, reducing the need to scroll while cooking.</p>
           </div>
           <div class="learning">
             <p class="learning-n">→</p>
@@ -973,10 +978,33 @@
     </div>
   </section>
 
+  <!-- SPRINT TO SHIPPED -->
+  <section class="sc-section sc-section--surface">
+    <div class="container">
+      <p class="eyebrow">08 — Sprint → Shipped</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);align-items:start;">
+        <div>
+          <h2>The design spec became the build spec.</h2>
+          <p>Documenting every design decision — not just the outcome, but the rationale and the rejected alternatives — meant the implementation had unusually clear requirements to work from. The confidence threshold, the pipeline step names, the per-field flag logic: all of it was written down precisely enough to implement directly.</p>
+          <p>The gap between prototype and product was narrow by design. When you can explain exactly why a UI behaves the way it does, building it becomes a translation problem rather than a interpretation problem.</p>
+        </div>
+        <div>
+          <p>Three things held up without change from design to production:</p>
+          <ul class="role-list" style="margin-top:var(--space-2);">
+            <li>The confidence-based routing model — no user configuration needed in the live product</li>
+            <li>The named pipeline steps on the saving screen — users respond to seeing the AI's work made legible</li>
+            <li>The per-field uncertainty flags — showing only what's wrong, not a global warning</li>
+          </ul>
+          <p style="margin-top:var(--space-3);">The live app is at <a href="https://souschef-sepia.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--sc-g-action);text-decoration:underline;text-underline-offset:3px;">souschef-sepia.vercel.app</a> — every screen in this case study corresponds to a live, working feature.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- LEARNINGS -->
   <section class="sc-section">
     <div class="container">
-      <p class="eyebrow">08 — Learnings</p>
+      <p class="eyebrow">09 — Learnings</p>
       <div class="grid-2" style="margin-bottom:var(--space-6);align-items:start;">
         <div>
           <h2>What this sprint taught me<br>about AI-assisted design.</h2>
