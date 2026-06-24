@@ -310,6 +310,9 @@
       </div>
       <h1 class="hero-h1 fade-up">From screenshot<br>to recipe, <em>instantly.</em></h1>
       <p class="hero-lead fade-up">Sous Chef is a recipe collection app for iOS and Android that captures recipes from any source — URLs, YouTube videos, screenshots, PDFs — and saves them as structured files in Google Drive. Designed solo in 3 days as an AI-assisted portfolio case study.</p>
+      <div class="fade-up" style="margin-bottom:var(--space-6);">
+        <a href="https://souschef-sepia.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Try the live app →</a>
+      </div>
       <div class="hero-meta fade-up">
         <div class="hero-meta-item">
           <p class="meta-label">Role</p>
@@ -321,7 +324,7 @@
         </div>
         <div class="hero-meta-item">
           <p class="meta-label">Platform</p>
-          <p class="meta-value">iOS · Android</p>
+          <p class="meta-value">iOS · Android · iPadOS</p>
         </div>
         <div class="hero-meta-item">
           <p class="meta-label">AI collaborator</p>
@@ -329,7 +332,7 @@
         </div>
         <div class="hero-meta-item">
           <p class="meta-label">Deliverables</p>
-          <p class="meta-value">Research · Design system · 8-screen prototype</p>
+          <p class="meta-value">Research · Design system · 8-screen prototype · User testing</p>
         </div>
       </div>
     </div>
@@ -606,6 +609,13 @@
       </div>
       <p style="margin-top:var(--space-3);max-width:60ch;">Every screen in the complete user flow, from first open to active cooking. Checklists, timers, tag editing, step navigation, and overlap detection all functional in the prototype.</p>
 
+      <div style="display:flex;align-items:center;justify-content:space-between;background:var(--sc-g-pale);border:1px solid var(--sc-g-light);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);margin-bottom:var(--space-4);flex-wrap:wrap;gap:var(--space-3);">
+        <div>
+          <p style="font-size:var(--size-sm);font-weight:600;color:var(--sc-g-dark);margin:0;max-width:none;">The app is live — try it yourself.</p>
+          <p style="font-size:var(--size-xs);color:var(--sc-g-mid);margin:4px 0 0;max-width:none;">Paste a recipe URL, screenshot, or YouTube link and watch the extraction pipeline run.</p>
+        </div>
+        <a href="https://souschef-sepia.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="background:var(--sc-g-action);flex-shrink:0;">Open SousChef →</a>
+      </div>
       <div class="screens-grid">
 
         <!-- 1 HOME -->
@@ -669,7 +679,7 @@
             </div>
             <span class="screen-badge">Add</span>
           </div>
-          <div class="screen-info"><p class="screen-name">Add recipe</p><p class="screen-desc">Source-first flow. 4 source types. Inline input panels expand on selection.</p></div>
+          <div class="screen-info"><p class="screen-name">Add recipe</p><p class="screen-desc">Source-first flow. 4 source types. Inline input panels expand on selection. User testing flagged photo capture as a 5th source — planned for v1.1.</p></div>
         </div>
 
         <!-- 3 SAVING -->
@@ -793,7 +803,7 @@
             </div>
             <span class="screen-badge">Recipe</span>
           </div>
-          <div class="screen-info"><p class="screen-name">Recipe detail</p><p class="screen-desc">Meta strip, ingredient checklist, step-by-step view, timers, notes.</p></div>
+          <div class="screen-info"><p class="screen-name">Recipe detail</p><p class="screen-desc">Meta strip, ingredient checklist, step-by-step view, timers, notes. User testing identified a gap: the options button has no destination screen — delete recipe and edit tags flows are scoped for v1.1.</p></div>
         </div>
 
         <!-- 7 TAGS -->
@@ -905,10 +915,68 @@
     </div>
   </section>
 
+  <!-- USER TESTING -->
+  <section class="sc-section sc-section--surface">
+    <div class="container">
+      <p class="eyebrow">07 — User testing</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);align-items:start;">
+        <div>
+          <h2>Six findings.<br>Three validated, three to build.</h2>
+          <p>After the sprint prototype was complete, I ran a round of user testing to stress-test the core flows. The sessions surfaced clear signal: users connected strongly with the multi-source upload and the confirmation screen, and called out three gaps that would shape the next iteration.</p>
+        </div>
+        <div>
+          <p>The findings split cleanly into two categories — things that landed as designed, and things that revealed scope gaps. Both are equally useful. The validated items reinforce the core design decisions; the gaps define what v1.1 needs to solve.</p>
+        </div>
+      </div>
+
+      <div style="margin-bottom:var(--space-6);">
+        <p class="eyebrow" style="margin-bottom:var(--space-4);">What landed</p>
+        <div class="learnings-grid">
+          <div class="learning">
+            <p class="learning-n">✓</p>
+            <p class="learning-title">"I like the ability to upload recipes from multiple sources."</p>
+            <p class="learning-body">The source-first Add flow — URL, YouTube, screenshot, PDF — resonated directly. Users appreciated not being locked into a single capture method. The 4-source grid validated the breadth decision without overwhelming the choice.</p>
+          </div>
+          <div class="learning">
+            <p class="learning-n">✓</p>
+            <p class="learning-title">"I like the screen after uploading that shows me the outcome — with the ability to confirm steps or ingredients."</p>
+            <p class="learning-body">The Confirm &amp; Save screen with per-field confidence flags was called out specifically as reassuring. Showing what the AI extracted — and flagging only what's uncertain — gave users confidence to trust the save without re-reading everything.</p>
+          </div>
+          <div class="learning">
+            <p class="learning-n">✓</p>
+            <p class="learning-title">"I would love to easily share my recipe to family and friends."</p>
+            <p class="learning-body">The Share tab in the Recipe detail screen was noticed and valued. The core sharing intent was already designed in; testing confirmed it should be a prominent, top-level action rather than buried in a menu.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="eyebrow" style="margin-bottom:var(--space-4);">What to build next</p>
+        <div class="learnings-grid">
+          <div class="learning">
+            <p class="learning-n">→</p>
+            <p class="learning-title">"I'd love to take photos of my own and adjust recipes based on my experience — my oven runs hot."</p>
+            <p class="learning-body">Two distinct needs here: photo capture as a fifth source type (alongside URL, YouTube, screenshot, PDF), and personal recipe notes — cook-specific adjustments like temperature offsets, timing tweaks, and substitutions that persist across sessions. Scoped for v1.1.</p>
+          </div>
+          <div class="learning">
+            <p class="learning-n">→</p>
+            <p class="learning-title">"Availability on iPad would be nice — bigger screen, cooking at home."</p>
+            <p class="learning-body">The larger iPad canvas changes the layout contract significantly: the recipe detail and cook mode screens could show ingredients and steps side-by-side rather than stacked. iPadOS is added to the platform scope; the component system was built to support this without redesign.</p>
+          </div>
+          <div class="learning">
+            <p class="learning-n">→</p>
+            <p class="learning-title">"There's an options button but no screen — I'd expect to delete a recipe or edit tags from there."</p>
+            <p class="learning-body">A clear scope gap: the options affordance was designed without its destination. Users correctly expected a bottom sheet with at minimum delete, edit tags, and manage source actions. The options screen is the first item scoped for v1.1, as it directly unblocks basic recipe management.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- LEARNINGS -->
   <section class="sc-section">
     <div class="container">
-      <p class="eyebrow">07 — Learnings</p>
+      <p class="eyebrow">08 — Learnings</p>
       <div class="grid-2" style="margin-bottom:var(--space-6);align-items:start;">
         <div>
           <h2>What this sprint taught me<br>about AI-assisted design.</h2>
