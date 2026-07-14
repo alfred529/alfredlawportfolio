@@ -3,15 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/webp" href="../assets/images/AL.webp" />
+  <link rel="icon" type="image/webp" href="../assets/images/AL.webp" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/webp" href="../assets/images/AL-white.webp" media="(prefers-color-scheme: dark)" />
   <title>BGIS Intrazone Revamp — Alfred Law</title>
   <meta name="description" content="BGIS Intrazone revamp: modernising an enterprise employee portal and bringing it to WCAG 2.1 accessibility compliance. Senior Product Designer case study by Alfred Law." />
+  <script>
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="../style.css" />
   <style>
     /* ── Case nav ── */
     .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
-    .case-nav a { font-size: var(--size-sm); color: var(--color-ink-3); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
-    .case-nav a:hover { color: var(--color-ink); }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-accent-light); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-accent-bright); }
 
     /* ── Hero ── */
     .cs-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
@@ -60,9 +68,9 @@
     .ba-header { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
     .ba-card--after .ba-header { background: var(--color-ink); border-color: var(--color-ink); }
     .ba-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); }
-    .ba-card--after .ba-label { color: rgba(255,255,255,.6); }
+    .ba-card--after .ba-label { color: color-mix(in srgb, var(--color-bg) 60%, transparent); }
     .ba-badge { font-size: var(--size-xs); font-weight: 700; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 2px 10px; border-radius: 100px; }
-    .ba-card--after .ba-badge { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.2); color: #fff; }
+    .ba-card--after .ba-badge { background: color-mix(in srgb, var(--color-bg) 10%, transparent); border-color: color-mix(in srgb, var(--color-bg) 18%, transparent); color: var(--color-bg); }
     .ba-body { padding: var(--space-4); }
     .ba-item { font-size: var(--size-sm); color: var(--color-ink-2); padding: var(--space-1) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: baseline; gap: var(--space-2); line-height: 1.5; }
     .ba-item:last-child { border-bottom: none; }
@@ -143,7 +151,7 @@
     .contrast-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); }
     .contrast-body { padding: var(--space-4); }
     .contrast-body--hc { background: #000; }
-    .contrast-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #E2E2E2; }
+    .contrast-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--color-border); }
     .contrast-body--hc .contrast-row { border-color: #444; }
     .contrast-text { font-size: var(--size-xs); color: var(--color-ink); }
     .contrast-body--hc .contrast-text { color: #7AF8CB; font-weight: 600; }
@@ -188,13 +196,33 @@
   <nav class="nav" role="navigation" aria-label="Main">
     <div class="nav__inner">
       <a href="../index.html" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
-        <img src="../assets/images/AL.webp" alt="AL" />
+        <img class="nav__logo-img nav__logo-img--dark" src="../assets/images/AL-white.webp" alt="AL" />
+        <img class="nav__logo-img nav__logo-img--light" src="../assets/images/AL.webp" alt="AL" />
         <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
       </a>
       <ul class="nav__links" id="nav-links" role="list">
         <li><a href="/">Work</a></li>
         <li><a href="../about.html">About</a></li>
       </ul>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="4" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <line x1="10" y1="0.5" x2="10" y2="2.5"/>
+            <line x1="10" y1="17.5" x2="10" y2="19.5"/>
+            <line x1="0.5" y1="10" x2="2.5" y2="10"/>
+            <line x1="17.5" y1="10" x2="19.5" y2="10"/>
+            <line x1="3.5" y1="3.5" x2="4.9" y2="4.9"/>
+            <line x1="15.1" y1="15.1" x2="16.5" y2="16.5"/>
+            <line x1="3.5" y1="16.5" x2="4.9" y2="15.1"/>
+            <line x1="15.1" y1="4.9" x2="16.5" y2="3.5"/>
+          </g>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" width="11" height="11" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M17.5 12.5A7.8 7.8 0 1 1 7.5 2.5a6.2 6.2 0 0 0 10 10z" fill="currentColor"/>
+        </svg>
+        <span class="theme-toggle__thumb"></span>
+      </button>
       <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
@@ -321,12 +349,12 @@
             <span class="ba-badge">After</span>
           </div>
           <div class="ba-body">
-            <div class="ba-item" style="color:#0A0A0A;">All text in live HTML — accessible to screen readers and indexable</div>
-            <div class="ba-item" style="color:#0A0A0A;">Language toggle — single language displayed at a time</div>
-            <div class="ba-item" style="color:#0A0A0A;">Fully responsive across desktop, tablet, and mobile breakpoints</div>
-            <div class="ba-item" style="color:#0A0A0A;">Updated to new BGIS brand colours with consistent application</div>
-            <div class="ba-item" style="color:#0A0A0A;">High contrast mode toggle meeting WCAG 2.1 AA requirements</div>
-            <div class="ba-item" style="color:#0A0A0A;">Persistent links hub — consistent location on every page</div>
+            <div class="ba-item" style="color:var(--color-ink);">All text in live HTML — accessible to screen readers and indexable</div>
+            <div class="ba-item" style="color:var(--color-ink);">Language toggle — single language displayed at a time</div>
+            <div class="ba-item" style="color:var(--color-ink);">Fully responsive across desktop, tablet, and mobile breakpoints</div>
+            <div class="ba-item" style="color:var(--color-ink);">Updated to new BGIS brand colours with consistent application</div>
+            <div class="ba-item" style="color:var(--color-ink);">High contrast mode toggle meeting WCAG 2.1 AA requirements</div>
+            <div class="ba-item" style="color:var(--color-ink);">Persistent links hub — consistent location on every page</div>
           </div>
         </div>
       </div>

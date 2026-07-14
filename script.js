@@ -25,6 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── Theme Toggle ───────────────────────────
+  const themeToggle = document.getElementById('theme-toggle');
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+    });
+  }
+
   // ── Active Nav Link ────────────────────────
   const currentPath = window.location.pathname;
   document.querySelectorAll('.nav__links a').forEach(a => {

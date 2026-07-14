@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/webp" href="assets/images/AL.webp" />
+  <link rel="icon" type="image/webp" href="assets/images/AL.webp" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/webp" href="assets/images/AL-white.webp" media="(prefers-color-scheme: dark)" />
   <title>Alfred Law — Senior Product Designer</title>
   <meta name="description" content="Alfred Law is a Senior Product Designer based in Toronto, specialising in FinTech and consumer mobile products." />
+  <script>
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="style.css" />
   <style>
     /* ── Hero ── */
@@ -15,7 +23,7 @@
       display: flex;
       align-items: center;
       overflow: hidden;
-      background: var(--color-ink);
+      background: var(--color-bg);
     }
 
     #hero-canvas {
@@ -44,17 +52,12 @@
       display: block;
       width: 32px;
       height: 1px;
-      background: rgba(255,255,255,0.3);
+      background: var(--color-ink);
     }
 
-    /* Inverted hero text & controls */
-    .hero .label { color: rgba(255,255,255,0.5); font-size: var(--size-sm); letter-spacing: 0.08em; }
-    .hero h1 { color: var(--color-bg); }
-    .hero .hero__sub { color: rgba(255,255,255,0.65); }
-    .hero .btn--primary { background: var(--color-bg); color: var(--color-ink); }
-    .hero .btn--primary:hover { background: rgba(255,255,255,0.85); }
-    .hero .btn--outline { border-color: rgba(255,255,255,0.35); color: var(--color-bg); }
-    .hero .btn--outline:hover { background: rgba(255,255,255,0.1); color: var(--color-bg); }
+    .hero .label { color: var(--color-ink-3); font-size: var(--size-sm); letter-spacing: 0.08em; }
+    .hero h1 { color: var(--color-ink); }
+    .hero .hero__sub { color: var(--color-ink-2); }
 
     .hero__headline {
       margin-bottom: var(--space-4);
@@ -94,7 +97,7 @@
       font-size: var(--size-xs);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: color-mix(in srgb, var(--color-ink) 40%, transparent);
     }
 
     .hero__scroll::after {
@@ -102,7 +105,7 @@
       display: block;
       width: 1px;
       height: 40px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      background: linear-gradient(to bottom, color-mix(in srgb, var(--color-ink) 30%, transparent), transparent);
     }
 
     @keyframes bounce {
@@ -165,13 +168,33 @@
   <nav class="nav" role="navigation" aria-label="Main">
     <div class="nav__inner">
       <a href="index.html" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
-        <img src="assets/images/AL.webp" alt="AL" />
+        <img class="nav__logo-img nav__logo-img--dark" src="assets/images/AL-white.webp" alt="AL" />
+        <img class="nav__logo-img nav__logo-img--light" src="assets/images/AL.webp" alt="AL" />
         <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
       </a>
       <ul class="nav__links" id="nav-links" role="list">
         <li><a href="/">Work</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="4" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <line x1="10" y1="0.5" x2="10" y2="2.5"/>
+            <line x1="10" y1="17.5" x2="10" y2="19.5"/>
+            <line x1="0.5" y1="10" x2="2.5" y2="10"/>
+            <line x1="17.5" y1="10" x2="19.5" y2="10"/>
+            <line x1="3.5" y1="3.5" x2="4.9" y2="4.9"/>
+            <line x1="15.1" y1="15.1" x2="16.5" y2="16.5"/>
+            <line x1="3.5" y1="16.5" x2="4.9" y2="15.1"/>
+            <line x1="15.1" y1="4.9" x2="16.5" y2="3.5"/>
+          </g>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" width="11" height="11" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M17.5 12.5A7.8 7.8 0 1 1 7.5 2.5a6.2 6.2 0 0 0 10 10z" fill="currentColor"/>
+        </svg>
+        <span class="theme-toggle__thumb"></span>
+      </button>
       <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
@@ -296,7 +319,7 @@
           <p class="label mb-2">About</p>
           <h2 class="mb-4">Multidisciplinary by training, product-focused by practice.</h2>
           <p>With a background spanning architecture, front-end development, and product design, I bring systems thinking to every problem I work on. Currently open to Senior Product Designer roles in Toronto.</p>
-          <p style="margin-top: var(--space-3); color: var(--color-ink-2);">I also won 1st place at a Kids Help Phone hackathon. <a href="work/pacific.html" style="color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px;">See Pacific →</a></p>
+          <p style="margin-top: var(--space-3); color: var(--color-ink-2);">I also won 1st place at a Kids Help Phone hackathon. <a href="work/pacific.html" class="arrow-link">See Pacific</a></p>
           <div class="hero__actions" style="margin-top: var(--space-4);">
             <a href="about.html" class="btn btn--primary">More about me</a>
             <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener noreferrer" class="btn btn--link">LinkedIn</a>
@@ -326,7 +349,7 @@
   </section>
 
   <!-- CONTACT -->
-  <section class="contact" style="background:#f7f7f7;">
+  <section class="contact" style="background:var(--color-surface);">
     <div class="container">
       <p class="label mb-2">Get in touch</p>
       <h2 class="mb-4 fade-up">Let's work together.</h2>
@@ -365,6 +388,17 @@
       const MAX_DIST    = 120;
       const MOUSE_DIST  = 160;
 
+      function getInkRGB() {
+        const hex = getComputedStyle(document.documentElement).getPropertyValue('--color-ink').trim().replace('#', '');
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        return `${r},${g},${b}`;
+      }
+
+      let inkRGB = getInkRGB();
+      window.addEventListener('themechange', () => { inkRGB = getInkRGB(); });
+
       function resize() {
         W = canvas.width  = canvas.offsetWidth;
         H = canvas.height = canvas.offsetHeight;
@@ -402,7 +436,7 @@
               ctx.beginPath();
               ctx.moveTo(particles[i].x, particles[i].y);
               ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(255,255,255,${0.12 * (1 - dist / MAX_DIST)})`;
+              ctx.strokeStyle = `rgba(${inkRGB},${0.12 * (1 - dist / MAX_DIST)})`;
               ctx.lineWidth   = 0.6;
               ctx.stroke();
             }
@@ -426,7 +460,7 @@
         particles.forEach(p => {
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255,255,255,0.3)';
+          ctx.fillStyle = `rgba(${inkRGB},0.3)`;
           ctx.fill();
         });
 
