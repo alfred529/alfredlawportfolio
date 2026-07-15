@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/webp" href="../assets/images/AL.webp" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/webp" href="../assets/images/AL-white.webp" media="(prefers-color-scheme: dark)" />
+  <title>TD — In-App Approval — Alfred Law</title>
+  <meta name="description" content="TD In-App Approval: replacing SMS one-time passcodes with contextual in-app verification for online purchases and logins. Senior Product Designer case study by Alfred Law." />
+  <script>
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Case nav ── */
+    .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-accent-light); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-accent-bright); }
+
+    /* ── Hero ── */
+    .cs-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
+    .hero-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .hero-tag { font-size: var(--size-xs); font-weight: 500; letter-spacing: .06em; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border); color: var(--color-ink-2); }
+    .hero-tag--filled { background: var(--color-surface); }
+    .hero-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: var(--color-ink); margin-bottom: var(--space-3); }
+    .hero-h1 em { font-style: italic; }
+    .hero-lead { font-size: var(--size-md); line-height: 1.75; color: var(--color-ink-2); max-width: 60ch; margin-bottom: var(--space-8); }
+    .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+    .hero-meta-item { padding-right: var(--space-6); padding-bottom: var(--space-2); }
+    .meta-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 5px; max-width: none; }
+    .meta-value { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); max-width: none; line-height: 1.4; }
+
+    /* ── Stat row ── */
+    .stat-row { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px solid var(--color-border); }
+    .stat-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .stat-desc { font-size: var(--size-sm); color: var(--color-ink-3); max-width: none; }
+
+    /* ── Sections ── */
+    .cs-section { padding: var(--space-12) 0; border-bottom: 1px solid var(--color-border); }
+    .cs-section:last-child { border-bottom: none; }
+    .cs-section--surface { background: var(--color-surface); }
+    .cs-section h2 { margin-bottom: var(--space-3); }
+    .cs-section p  { margin-bottom: var(--space-3); }
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
+
+    /* ── 2-col grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+
+    /* ── Phone screenshots — fixed common width so every shot reads at the same scale ── */
+    .phone-shot { width: 100%; max-width: 280px; margin: var(--space-4) auto; display: block; }
+
+    /* ── Blockquote ── */
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
+    blockquote cite { display: block; margin-top: 8px; font-size: var(--size-xs); color: var(--color-ink-3); font-style: normal; }
+
+    /* ── Insight cards ── */
+    .insight-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-top: var(--space-6); }
+    .insight-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .insight-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: var(--space-2); }
+    .insight-finding { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-2); line-height: 1.4; max-width: none; }
+    .insight-implication { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; padding-top: var(--space-2); border-top: 1px solid var(--color-border); }
+    .insight-implication strong { color: var(--color-ink-2); }
+
+    /* ── Decisions ── */
+    .decision { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--color-border); padding: var(--space-6) 0; }
+    .decision:last-child { border-bottom: 1px solid var(--color-border); }
+    .d-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: 6px; }
+    .d-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); padding-right: var(--space-4); }
+    .d-chosen { display: inline-flex; align-items: center; gap: 5px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 3px 11px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .d-rationale { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; margin-bottom: 0; }
+    .d-rejected { margin-top: var(--space-2); padding-top: var(--space-2); border-top: 1px solid var(--color-border); font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+    .d-rejected strong { color: var(--color-ink-2); }
+
+    /* ── Role responsibilities list ── */
+    .role-list { list-style: none; margin-top: var(--space-3); }
+    .role-list li { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.6; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: baseline; gap: var(--space-2); }
+    .role-list li:last-child { border-bottom: none; }
+    .role-list li::before { content: '—'; color: var(--color-ink-3); flex-shrink: 0; font-size: var(--size-xs); }
+
+    /* ── Collaboration grid ── */
+    .collab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4); }
+    .collab-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .collab-team { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-2); max-width: none; }
+    .collab-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.65; max-width: none; }
+
+    /* ── Outcomes ── */
+    .outcomes-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .outcome-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .outcome-cell:last-child { border-right: none; }
+    .outcome-num { font-family: var(--font-display); font-size: 3.25rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .outcome-label { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .outcome-detail { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; gap: var(--space-6); }
+      .insight-grid { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .stat-cell:last-child { border-bottom: none; }
+      .decision { grid-template-columns: 1fr; }
+      .d-title { padding-right: 0; margin-bottom: var(--space-2); }
+      .collab-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .outcome-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .outcome-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
+        <img class="nav__logo-img nav__logo-img--dark" src="../assets/images/AL-white.webp" alt="AL" />
+        <img class="nav__logo-img nav__logo-img--light" src="../assets/images/AL.webp" alt="AL" />
+        <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="../about.html">About</a></li>
+      </ul>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="4" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <line x1="10" y1="0.5" x2="10" y2="2.5"/>
+            <line x1="10" y1="17.5" x2="10" y2="19.5"/>
+            <line x1="0.5" y1="10" x2="2.5" y2="10"/>
+            <line x1="17.5" y1="10" x2="19.5" y2="10"/>
+            <line x1="3.5" y1="3.5" x2="4.9" y2="4.9"/>
+            <line x1="15.1" y1="15.1" x2="16.5" y2="16.5"/>
+            <line x1="3.5" y1="16.5" x2="4.9" y2="15.1"/>
+            <line x1="15.1" y1="4.9" x2="16.5" y2="3.5"/>
+          </g>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" width="11" height="11" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M17.5 12.5A7.8 7.8 0 1 1 7.5 2.5a6.2 6.2 0 0 0 10 10z" fill="currentColor"/>
+        </svg>
+        <span class="theme-toggle__thumb"></span>
+      </button>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">← All work</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="container">
+      <div class="hero-tags">
+        <span class="hero-tag hero-tag--filled">Senior UI/UX Designer (Product Design)</span>
+        <span class="hero-tag">TD Bank · 2024–2025</span>
+      </div>
+      <h1 class="hero-h1 fade-up">The passcode was secure.<br><em>The experience wasn't.</em></h1>
+      <p class="hero-lead fade-up">I redesigned how TD customers verify online purchases and logins — replacing SMS one-time passcodes with secure in-app approval. Instead of typing a six-digit code, customers review the actual request — merchant, amount, device, location — and approve or decline it directly in the TD app. Fraudulent activity reports dropped 35% across in-app and call-centre channels.</p>
+      <div class="hero-meta fade-up">
+        <div class="hero-meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Senior UI/UX Designer (Product Design)</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Company</p>
+          <p class="meta-value">TD Bank</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Platform</p>
+          <p class="meta-value">iOS · Android</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Year</p>
+          <p class="meta-value">2024–2025</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Teams</p>
+          <p class="meta-value">Product · Engineering · Fraud &amp; Security · Design Systems</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div>
+    <div class="container" style="padding-left:0;padding-right:0;max-width:100%;">
+      <div class="stat-row" style="max-width:var(--max-width);margin:0 auto;padding:0 var(--space-4);">
+        <div class="stat-cell">
+          <p class="stat-num">35%</p>
+          <p class="stat-desc">Drop in fraudulent activity reports across in-app and call-centre channels</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">SMS → In-app</p>
+          <p class="stat-desc">Verification moved from six-digit passcodes to contextual in-app approval</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">1</p>
+          <p class="stat-desc">Consolidated view of all verification requests, with full transaction detail</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">01 — Context</p>
+      <div class="grid-2">
+        <div>
+          <h2>One code for everything. Context for nothing.</h2>
+          <p>When a TD customer made an online purchase or logged in from a new device, verification arrived as an SMS one-time passcode: six digits, a short expiry window, and no information about what was actually being verified. The customer's job was to copy the code — not to evaluate the request.</p>
+          <p>This pattern has well-documented problems. SMS codes can be intercepted or phished, they break the customer's flow mid-purchase, and — most importantly for fraud — they carry no context. A customer looking at "483902" has no way to notice that the purchase behind it isn't theirs.</p>
+        </div>
+        <div>
+          <p>My role was to design the in-app replacement: a verification experience that covers both e-commerce purchases and account logins, works across iOS and Android, and treats the customer as an informed decision-maker rather than a code-relay. That meant:</p>
+          <ul class="role-list">
+            <li>Designing the notification-to-decision journey across every entry point</li>
+            <li>Defining what context each request type needs to surface (purchase vs. login)</li>
+            <li>Designing for the suspicious moment — what happens when a customer doesn't recognize a request</li>
+            <li>Covering the full state space: approval, decline, expiry, errors, and partial data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">02 — Problem</p>
+      <div class="grid-2">
+        <div>
+          <h2>Verification that asked for trust but gave no information.</h2>
+          <p>The SMS flow made customers responsible for security decisions while withholding everything they'd need to make one.</p>
+        </div>
+        <div>
+          <p>Research and support-call analysis pointed to two specific failures:</p>
+          <div style="margin-top:var(--space-3);">
+            <div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border);">
+              <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:4px;max-width:none;">Customers approved reflexively.</p>
+              <p style="font-size:var(--size-xs);color:var(--color-ink-3);max-width:none;margin:0;">A code arrives, the customer types it. The action had become muscle memory — which is exactly what fraud exploits.</p>
+            </div>
+            <div style="padding:var(--space-3) 0;">
+              <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:4px;max-width:none;">Fraud was invisible until the statement.</p>
+              <p style="font-size:var(--size-xs);color:var(--color-ink-3);max-width:none;margin:0;">With no merchant or amount shown at verification time, fraudulent transactions were typically discovered days later — driving disputed-charge calls to the call centre.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHTS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">03 — Insights</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Three findings that shaped the design.</h2>
+        </div>
+        <div></div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <p class="insight-num">01</p>
+          <p class="insight-finding">Context is the security feature. A customer who can see merchant, amount, device, and location can catch fraud at the moment it happens. A customer with a six-digit code cannot.</p>
+          <p class="insight-implication"><strong>Implication:</strong> every request must show its full context before any action is possible.</p>
+        </div>
+        <div class="insight-card">
+          <p class="insight-num">02</p>
+          <p class="insight-finding">Approve and Decline must be equals. If declining is buried or feels like an error state, suspicious customers will approve anyway just to make the interruption go away.</p>
+          <p class="insight-implication"><strong>Implication:</strong> Decline is a first-class action with equal visual weight, on every request card.</p>
+        </div>
+        <div class="insight-card">
+          <p class="insight-num">03</p>
+          <p class="insight-finding">The unhappy paths are the product. Verification is a security surface: expired requests, failed approvals, and partial data aren't edge cases — they're the moments that determine whether customers trust the system.</p>
+          <p class="insight-implication"><strong>Implication:</strong> design every state with the same care as the happy path.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">04 — Design decisions</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Four decisions.<br>Each in service of an informed customer.</h2>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">01</p><p class="d-title">Entry points: meet the customer at the moment of intent</p></div>
+        <div>
+          <span class="d-chosen">✦ Push notification + home-screen verification card</span>
+          <p class="d-rationale">A verification request is urgent and time-boxed, so the primary entry is a push notification that deep-links into the flow. But notifications get missed — so a "Verification required" card also surfaces in the app's Need to Know feed, ensuring a pending request is discoverable from the home screen. Two paths, one destination.</p>
+          <div class="grid-2" style="margin-top:var(--space-4);">
+            <img src="../assets/images/td-approval-entry-banner.png" alt="Notification banner over the TD app home screen" class="case-image phone-shot" />
+            <img src="../assets/images/td-approval-entry-card.png" alt="Verification required card in the home screen's Need to Know feed" class="case-image phone-shot" />
+          </div>
+          <p class="d-rejected"><strong>Rejected:</strong> Notification-only entry. A missed or dismissed notification would strand the request — and strand the customer mid-checkout.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">02</p><p class="d-title">Context over codes: every request shows who, what, where, when</p></div>
+        <div>
+          <span class="d-chosen">✦ Full transaction detail on every request card</span>
+          <p class="d-rationale">Purchase requests show the card, merchant, amount, and time. Login requests show the platform, browser, location, and time of the attempt. This is the core of the redesign: the customer isn't relaying a code, they're evaluating a request — and they finally have the information to do it. Multiple pending requests consolidate into a single Verification Requests view, so nothing lives only in a disappearing text message.</p>
+          <img src="../assets/images/td-approval-request-detail.png" alt="Verification request cards showing full login and purchase detail" class="case-image phone-shot" />
+          <p class="d-rejected"><strong>Rejected:</strong> Minimal cards with a "view details" tap. Requiring a tap to see the merchant and amount would reintroduce the exact information gap the redesign exists to close.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">03</p><p class="d-title">Friction where it protects: designing the suspicious moment</p></div>
+        <div>
+          <span class="d-chosen">✦ Pre-approval warning + direct path to fraud teams</span>
+          <p class="d-rationale">Every request list opens with a persistent warning — "If a request listed here wasn't initiated by you, do not tap Approve" — with a "Don't recognize a request?" link. That link opens a bottom sheet that tells the customer to decline anything unfamiliar and gives one-tap phone lines to TD's Access Card and Credit Card fraud teams. The suspicious moment is designed, not left to the customer to improvise: recognize → decline → escalate, all without leaving the screen.</p>
+          <img src="../assets/images/td-approval-fraud-sheet.png" alt="Don't recognize a request bottom sheet with direct phone links to fraud teams" class="case-image phone-shot" />
+          <p class="d-rejected"><strong>Rejected:</strong> Treating fraud guidance as help-centre content outside the flow. The moment of suspicion is the moment of action — routing customers to search a FAQ loses them.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">04</p><p class="d-title">Honest states: the system tells the truth under failure</p></div>
+        <div>
+          <span class="d-chosen">✦ Distinct designed states for success, error, expiry, and partial data</span>
+          <p class="d-rationale">Approval requests are time-boxed and API-dependent, so the state space is wide. Each outcome gets a distinct, plainly worded state on the request card: success (with a pointer back to the originating context — "Return to the WebBroker window to complete your login"), failure ("the approval did not go through — try again later"), and expiry ("go back and start logging in again"). When request data can't be fully loaded, the request degrades honestly — an "Unknown Device" label and a banner explaining information may be missing — rather than presenting a confident-looking card built on incomplete data. On a security surface, pretending certainty the system doesn't have is a dark pattern.</p>
+          <div class="grid-2" style="margin-top:var(--space-4);">
+            <img src="../assets/images/td-approval-state-success.png" alt="Success state confirming the login approval went through" class="case-image phone-shot" />
+            <img src="../assets/images/td-approval-state-error.png" alt="Error state explaining the login approval did not go through" class="case-image phone-shot" />
+          </div>
+          <div class="grid-2" style="margin-top:var(--space-3);">
+            <img src="../assets/images/td-approval-state-expired.png" alt="Expired state prompting the customer to start logging in again" class="case-image phone-shot" />
+            <img src="../assets/images/td-approval-state-degraded.png" alt="Degraded state with an Unknown Device label when request data is incomplete" class="case-image phone-shot" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">05 — Solution</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>From bare code to informed decision.</h2>
+          <p>The shipped experience: a verification request arrives by push notification or surfaces on the home screen; the customer authenticates into the TD app and lands on a consolidated Verification Requests view; each request — purchase or login — presents its full context with equal-weight Approve and Decline actions; and every outcome, including failure and expiry, resolves to a clear, honest state.</p>
+        </div>
+        <div>
+          <p>The same framework handles both request types today and is built to extend to future verification scenarios without new patterns.</p>
+        </div>
+      </div>
+
+      <img src="../assets/images/td-approval-request-detail.png" alt="Overview of the shipped verification experience showing login and purchase requests" class="case-image phone-shot" />
+    </div>
+  </section>
+
+  <!-- CONSTRAINTS & COLLABORATION -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">06 — Constraints &amp; collaboration</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Security work is cross-functional by definition.</h2>
+        </div>
+        <div></div>
+      </div>
+      <div class="collab-grid">
+        <div class="collab-card">
+          <p class="collab-team">Product</p>
+          <p class="collab-body">Balanced fraud-reduction goals against purchase-flow completion rates; verification that's too heavy kills conversions, too light defeats the purpose.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">Fraud &amp; Security</p>
+          <p class="collab-body">Defined the request metadata that could safely be surfaced (merchant, amount, device, location) and the escalation paths behind the fraud contact sheet.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">Engineering</p>
+          <p class="collab-body">Requests are time-boxed and depend on multiple data sources; I specified fallback behaviour for every partial-data and timeout scenario so the UI stays truthful under degraded conditions.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">Design Systems</p>
+          <p class="collab-body">Built on existing card, banner, and bottom-sheet primitives; flagged the request-card pattern for incorporation into the system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">07 — Outcomes</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);align-items:start;">
+        <div>
+          <h2>Fewer fraud reports. A verification flow customers can actually read.</h2>
+          <p>Fraudulent activity reports dropped 35% across in-app and call-centre channels. The mechanism is visible in the design: customers who see the merchant and amount at verification time catch fraudulent requests in the moment and decline them — instead of discovering them on a statement and calling in.</p>
+        </div>
+        <div>
+          <p>Verification also moved from a channel TD doesn't control (SMS) into the authenticated app, strengthening the security of the transaction itself, and gave customers a single consolidated place to review every pending and past request.</p>
+        </div>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-cell">
+          <p class="outcome-num">35%</p>
+          <p class="outcome-label">Fraud reports down</p>
+          <p class="outcome-detail">Drop in fraudulent activity reports across in-app and call-centre channels.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">SMS → In-app</p>
+          <p class="outcome-label">Verification channel</p>
+          <p class="outcome-detail">Verification moved into the authenticated app, with full transaction context.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">2 request types, 1 pattern</p>
+          <p class="outcome-label">Consolidated framework</p>
+          <p class="outcome-detail">Purchases and logins handled by one consolidated, extensible verification framework.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">08 — Reflection</p>
+      <div class="grid-2">
+        <div>
+          <h2>What I'd do differently.</h2>
+          <p>The degraded-data states were designed after the core flow rather than alongside it. On a security surface, the partial-data experience deserves first-class treatment from day one — "Unknown Device" is one of the most consequential strings in the entire feature.</p>
+          <p>I'd also push for earlier baseline instrumentation on the SMS flow. The 35% outcome is strong, but a richer before/after picture — decline rates, time-to-decision, fraud catch rate at verification time — would have told us more about why it worked.</p>
+        </div>
+        <div>
+          <h2>What this reinforced.</h2>
+          <p>Security UX is trust UX. The biggest design lever wasn't a screen — it was deciding that the customer deserves the same information the system has. And the unglamorous work — expiry states, error copy, partial-data fallbacks — is where that trust is actually won or lost.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
