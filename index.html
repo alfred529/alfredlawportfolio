@@ -127,6 +127,47 @@
       .section-header { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
     }
 
+    /* ── More Work ── */
+    .more-work { padding: var(--space-16) 0; border-top: 1px solid var(--color-border); }
+
+    .more-work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+
+    @media (max-width: 768px) {
+      .more-work-grid { grid-template-columns: 1fr; }
+    }
+
+    .more-work-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      background: var(--color-bg);
+    }
+
+    .more-work-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+      margin-bottom: var(--space-2);
+    }
+
+    .more-work-card__title {
+      font-family: var(--font-display);
+      font-size: var(--size-lg);
+      font-weight: 500;
+      margin-bottom: var(--space-1);
+    }
+
+    .more-work-card__desc {
+      font-size: var(--size-sm);
+      color: var(--color-ink-3);
+      line-height: 1.6;
+      max-width: none;
+    }
+
     /* ── About Strip ── */
     .about-strip {
       padding: var(--space-16) 0;
@@ -252,7 +293,7 @@
               <span class="tag">Data Analysis</span>
             </div>
             <h3 class="work-card__title">TD Loyalty & Rewards — Education Centre</h3>
-            <p class="work-card__desc">Designed TD's Loyalty & Rewards Education Centre — over 65% of users engaged at launch, cardholder comprehension improved, and support calls about rewards dropped by 40%+ within two months.</p>
+            <p class="work-card__desc">Designed TD's Loyalty & Rewards Education Centre — 65%+ of cardholders engaged at launch, cardholder comprehension improved, and support calls about rewards dropped by 40%+ within two months.</p>
           </div>
         </a>
 
@@ -327,6 +368,66 @@
     </div>
   </section>
 
+  <!-- MORE WORK -->
+  <section class="more-work">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="label mb-2">Additional work</p>
+          <h2>More work</h2>
+        </div>
+      </div>
+
+      <div class="more-work-grid" data-stagger>
+
+        <!-- TD — Pay with Rewards -->
+        <div class="more-work-card fade-up">
+          <div class="more-work-card__tags">
+            <span class="tag">FinTech</span>
+            <span class="tag">Mobile</span>
+            <span class="tag">Loyalty</span>
+          </div>
+          <h3 class="more-work-card__title">TD — Pay with Rewards</h3>
+          <p class="more-work-card__desc">Designed transaction-level rewards redemption in the TD mobile app — cardholders review transactions and pay off specific purchases with points.</p>
+        </div>
+
+        <!-- BGIS Assist -->
+        <div class="more-work-card fade-up">
+          <div class="more-work-card__tags">
+            <span class="tag">Mobile App</span>
+            <span class="tag">WCAG 2.1</span>
+            <span class="tag">Design Systems</span>
+          </div>
+          <h3 class="more-work-card__title">BGIS Assist</h3>
+          <p class="more-work-card__desc">Redesigned the client-facing service-request app property managers use instead of calling the call centre — accessibility-compliant, dark mode, mobile and tablet.</p>
+        </div>
+
+        <!-- Brotherize -->
+        <div class="more-work-card fade-up">
+          <div class="more-work-card__tags">
+            <span class="tag">iOS</span>
+            <span class="tag">0-to-1</span>
+            <span class="tag">Shipped</span>
+          </div>
+          <h3 class="more-work-card__title">Brotherize</h3>
+          <p class="more-work-card__desc">End-to-end product design for an iOS fitness app — discovery through high-fidelity design; MVP shipped to the App Store.</p>
+        </div>
+
+        <!-- PLACEHOLDER: Add a fourth card here once the "TD — In-App Approval" case study is published, linking to work/td-approval.html (or similar).
+        <a href="work/td-approval.html" class="more-work-card fade-up">
+          <div class="more-work-card__tags">
+            <span class="tag">FinTech</span>
+            <span class="tag">Mobile</span>
+          </div>
+          <h3 class="more-work-card__title">TD — In-App Approval</h3>
+          <p class="more-work-card__desc">[Description pending]</p>
+        </a>
+        -->
+
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT STRIP -->
   <section class="about-strip">
     <div class="container">
@@ -334,7 +435,7 @@
         <div class="fade-up">
           <p class="label mb-2">About</p>
           <h2 class="mb-4">Multidisciplinary by training, product-focused by practice.</h2>
-          <p>With a background spanning architecture, front-end development, and product design, I bring systems thinking to every problem I work on. Currently open to Senior Product Designer roles in Toronto.</p>
+          <p>With a background spanning architecture, front-end development, and product design, I bring systems thinking to every problem I work on. Currently open to Senior Product Designer roles — Toronto or remote.</p>
           <p style="margin-top: var(--space-3); color: var(--color-ink-2);">I also won 1st place at a Kids Help Phone hackathon. <a href="work/pacific.html" class="arrow-link">See Pacific</a></p>
           <div class="hero__actions" style="margin-top: var(--space-4);">
             <a href="about.html" class="btn btn--primary">More about me</a>
