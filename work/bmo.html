@@ -96,19 +96,19 @@
     /* ── AB test comparison ── */
     .ab-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; gap: var(--space-3); margin-top: var(--space-6); }
     .ab-card { border: 1px solid var(--color-border); overflow: hidden; display: grid; grid-template-rows: subgrid; grid-row: span 3; }
-    .ab-card--variant { border-color: var(--color-accent); }
+    .ab-card--variant { border-color: var(--color-accent-contrast); }
     .ab-header { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
-    .ab-card--variant .ab-header { background: var(--color-accent); border-color: var(--color-accent); }
+    .ab-card--variant .ab-header { background: var(--color-accent-contrast); border-color: var(--color-accent-contrast); }
     .ab-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); }
-    .ab-card--variant .ab-label { color: rgba(255,255,255,.75); }
+    .ab-card--variant .ab-label { color: #FFFFFF; }
     .ab-badge { font-size: var(--size-xs); font-weight: 700; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 2px 10px; border-radius: 100px; }
-    .ab-card--variant .ab-badge { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.3); color: #FFFFFF; }
+    .ab-card--variant .ab-badge { background: #FFFFFF; border-color: #FFFFFF; color: var(--color-accent-contrast); }
     .ab-body { padding: var(--space-4); }
     .ab-item { font-size: var(--size-sm); color: var(--color-ink-2); padding: var(--space-1) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: baseline; gap: var(--space-2); line-height: 1.5; }
     .ab-item:last-child { border-bottom: none; }
     .ab-item::before { content: '—'; color: var(--color-ink-3); flex-shrink: 0; font-size: var(--size-xs); }
     .ab-result { padding: var(--space-3); background: var(--color-surface); border-top: 1px solid var(--color-border); font-size: var(--size-sm); color: var(--color-ink-2); max-width: none; margin: 0; }
-    .ab-card--variant .ab-result { background: var(--color-accent); color: rgba(255,255,255,.85); border-color: var(--color-accent); }
+    .ab-card--variant .ab-result { background: var(--color-accent-contrast); color: #FFFFFF; border-color: var(--color-accent-contrast); }
     .ab-result strong { color: var(--color-ink); }
     .ab-card--variant .ab-result strong { color: #FFFFFF; }
 
@@ -188,13 +188,14 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main">
     <div class="nav__inner">
       <a href="../index.html" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
-        <img class="nav__logo-img nav__logo-img--dark" src="../assets/images/AL-white.webp" alt="AL" />
-        <img class="nav__logo-img nav__logo-img--light" src="../assets/images/AL.webp" alt="AL" />
+        <img class="nav__logo-img nav__logo-img--dark" src="../assets/images/AL-white.webp" alt="AL" aria-hidden="true" />
+        <img class="nav__logo-img nav__logo-img--light" src="../assets/images/AL.webp" alt="AL" aria-hidden="true" />
         <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
       </a>
       <ul class="nav__links" id="nav-links" role="list">
@@ -225,6 +226,8 @@
       </button>
     </div>
   </nav>
+
+  <main id="main-content">
 
   <!-- BREADCRUMB -->
   <div class="case-nav">
@@ -690,6 +693,8 @@
   </section>
 
   <!-- FOOTER -->
+  </main>
+
   <footer class="footer">
     <div class="container">
       <div class="footer__inner">

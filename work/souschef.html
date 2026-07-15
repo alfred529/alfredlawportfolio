@@ -290,13 +290,14 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main">
     <div class="nav__inner">
       <a href="../index.html" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
-        <img class="nav__logo-img nav__logo-img--dark" src="../assets/images/AL-white.webp" alt="AL" />
-        <img class="nav__logo-img nav__logo-img--light" src="../assets/images/AL.webp" alt="AL" />
+        <img class="nav__logo-img nav__logo-img--dark" src="../assets/images/AL-white.webp" alt="AL" aria-hidden="true" />
+        <img class="nav__logo-img nav__logo-img--light" src="../assets/images/AL.webp" alt="AL" aria-hidden="true" />
         <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
       </a>
       <ul class="nav__links" id="nav-links" role="list">
@@ -327,6 +328,8 @@
       </button>
     </div>
   </nav>
+
+  <main id="main-content">
 
   <!-- BREADCRUMB -->
   <div class="case-nav">
@@ -595,20 +598,20 @@
             <div class="swatch" style="background:#EFF4EB;"><span style="color:#3A5428;">pale</span></div>
             <div class="swatch" style="background:#D4E8C2;"><span style="color:#1E2E14;">light</span></div>
             <div class="swatch" style="background:#AECF8A;"><span style="color:#1E2E14;">mid-lt</span></div>
-            <div class="swatch" style="background:#7FAF52;"><span style="color:#fff;">mid</span></div>
+            <div class="swatch" style="background:#7FAF52;"><span style="color:#1E2E14;">mid</span></div>
             <div class="swatch" style="background:#3A5428;"><span style="color:#D4E8C2;">mid-dk</span></div>
             <div class="swatch" style="background:#2A3D1C;"><span style="color:#AECF8A;">action</span></div>
             <div class="swatch" style="background:#1E2E14;"><span style="color:#7FAF52;">dark</span></div>
           </div>
           <p style="font-size:var(--size-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:10px;margin-top:20px;max-width:none;">Warm neutrals</p>
           <div class="swatch-strip">
-            <div class="swatch" style="background:#FAFAF8;border:1px solid #E8E4DC;"><span style="color:#C8C4BC;">offwh</span></div>
-            <div class="swatch" style="background:#F5F2EB;"><span style="color:#C8C4BC;">surf</span></div>
-            <div class="swatch" style="background:#E8E4DC;"><span style="color:#888780;">rule</span></div>
-            <div class="swatch" style="background:#C8C4BC;"><span style="color:#fff;">bdr</span></div>
+            <div class="swatch" style="background:#FAFAF8;border:1px solid #E8E4DC;"><span style="color:#5F5E5A;">offwh</span></div>
+            <div class="swatch" style="background:#F5F2EB;"><span style="color:#5F5E5A;">surf</span></div>
+            <div class="swatch" style="background:#E8E4DC;"><span style="color:#5F5E5A;">rule</span></div>
+            <div class="swatch" style="background:#C8C4BC;"><span style="color:#444441;">bdr</span></div>
             <div class="swatch" style="background:#5F5E5A;"><span style="color:#fff;">muted</span></div>
             <div class="swatch" style="background:#444441;"><span style="color:#C8C4BC;">sec</span></div>
-            <div class="swatch" style="background:#1a1a1a;"><span style="color:#666;">ink</span></div>
+            <div class="swatch" style="background:#1a1a1a;"><span style="color:#C8C4BC;">ink</span></div>
           </div>
           <p style="font-size:var(--size-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:10px;margin-top:20px;max-width:none;">Tag colours — WCAG AA verified</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -654,7 +657,7 @@
 
         <!-- 1 HOME -->
         <div class="screen-card">
-          <div class="screen-thumb">
+          <div class="screen-thumb" aria-hidden="true">
             <div class="mp">
               <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
               <div class="mp-nav"><span class="mp-wm">SousChef</span><div style="width:11px;height:11px;border-radius:50%;border:1px solid var(--sc-rule);"></div></div>
@@ -689,7 +692,7 @@
 
         <!-- 2 ADD -->
         <div class="screen-card">
-          <div class="screen-thumb">
+          <div class="screen-thumb" aria-hidden="true">
             <div class="mp">
               <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
               <div class="mp-header"><div class="mp-hclose"></div><span class="mp-htitle">Add a recipe</span></div>
@@ -718,7 +721,7 @@
 
         <!-- 3 SAVING -->
         <div class="screen-card">
-          <div class="screen-thumb">
+          <div class="screen-thumb" aria-hidden="true">
             <div class="mp">
               <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
               <div class="mp-header"><div class="mp-hclose"></div><span class="mp-htitle">Extracting…</span></div>
@@ -741,7 +744,7 @@
 
         <!-- 4 CONFIRM -->
         <div class="screen-card">
-          <div class="screen-thumb">
+          <div class="screen-thumb" aria-hidden="true">
             <div class="mp">
               <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
               <div class="mp-header"><div class="mp-hclose"></div><span class="mp-htitle">Confirm &amp; save</span></div>
@@ -771,7 +774,7 @@
 
         <!-- 5 BROWSE -->
         <div class="screen-card">
-          <div class="screen-thumb">
+          <div class="screen-thumb" aria-hidden="true">
             <div class="mp">
               <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
               <div class="mp-nav"><span class="mp-wm">SousChef</span><div style="width:10px;height:10px;border-radius:50%;border:1px solid var(--sc-rule);"></div></div>
@@ -804,7 +807,7 @@
 
         <!-- 6 RECIPE DETAIL -->
         <div class="screen-card">
-          <div class="screen-thumb">
+          <div class="screen-thumb" aria-hidden="true">
             <div class="mp">
               <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
               <div class="mp-det-hero"><div class="mp-det-back"></div><div style="font-size:16px;color:#CCC;">□</div></div>
@@ -842,7 +845,7 @@
 
         <!-- 7 TAGS -->
         <div class="screen-card">
-          <div class="screen-thumb">
+          <div class="screen-thumb" aria-hidden="true">
             <div class="mp">
               <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
               <div class="mp-header"><div class="mp-hclose"></div><span class="mp-htitle">Review tags</span></div>
@@ -874,7 +877,7 @@
 
         <!-- 8 COOK MODE -->
         <div class="screen-card">
-          <div class="screen-thumb">
+          <div class="screen-thumb" aria-hidden="true">
             <div class="mp">
               <div class="mp-sb" style="background:var(--sc-g-action);">
                 <div class="mp-sb-dot" style="background:rgba(255,255,255,.3);"></div>
@@ -1086,6 +1089,8 @@
   </section>
 
   <!-- FOOTER -->
+</main>
+
   <footer class="footer">
     <div class="container">
       <div class="footer__inner">
