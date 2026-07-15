@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/webp" href="../assets/images/AL.webp" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/webp" href="../assets/images/AL-white.webp" media="(prefers-color-scheme: dark)" />
+  <title>Brotherize — Alfred Law</title>
+  <meta name="description" content="Brotherize: a gamified fitness accountability app for iOS — feed, challenges, points and rank system designed 0-to-1 as a contract product designer, shipped as an MVP on the App Store. UX/UI case study by Alfred Law." />
+  <script>
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Case nav ── */
+    .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-accent-light); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-accent-bright); }
+
+    /* ── Hero ── */
+    .cs-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
+    .hero-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .hero-tag { font-size: var(--size-xs); font-weight: 500; letter-spacing: .06em; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border); color: var(--color-ink-2); }
+    .hero-tag--filled { background: var(--color-surface); }
+    .hero-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: var(--color-ink); margin-bottom: var(--space-3); }
+    .hero-h1 em { font-style: italic; }
+    .hero-lead { font-size: var(--size-md); line-height: 1.75; color: var(--color-ink-2); max-width: 60ch; margin-bottom: var(--space-8); }
+    .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+    .hero-meta-item { padding-right: var(--space-6); padding-bottom: var(--space-2); }
+    .meta-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 5px; max-width: none; }
+    .meta-value { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); max-width: none; line-height: 1.4; }
+
+    /* ── Stat row ── */
+    .stat-row { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--color-border); }
+    .stat-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .stat-desc { font-size: var(--size-sm); color: var(--color-ink-3); max-width: none; }
+
+    /* ── Sections ── */
+    .cs-section { padding: var(--space-12) 0; border-bottom: 1px solid var(--color-border); }
+    .cs-section:last-child { border-bottom: none; }
+    .cs-section--surface { background: var(--color-surface); }
+    .cs-section h2 { margin-bottom: var(--space-3); }
+    .cs-section p  { margin-bottom: var(--space-3); }
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
+
+    /* ── 2-col grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+
+    /* ── Blockquote ── */
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
+
+    /* ── Problem rows ── */
+    .problem-row { padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+    .problem-row:last-child { border-bottom: none; }
+    .problem-title { font-size: var(--size-sm); font-weight: 700; color: var(--color-ink); margin-bottom: 5px; max-width: none; }
+    .problem-desc { font-size: var(--size-sm); color: var(--color-ink-2); max-width: none; margin: 0; line-height: 1.65; }
+
+    /* ── Decisions ── */
+    .decision { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--color-border); padding: var(--space-6) 0; }
+    .decision:last-child { border-bottom: 1px solid var(--color-border); }
+    .d-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: 6px; }
+    .d-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); padding-right: var(--space-4); }
+    .d-chosen { display: inline-flex; align-items: center; gap: 5px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 3px 11px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .d-rationale { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; margin-bottom: var(--space-2); }
+    .d-rejected { padding-top: var(--space-2); border-top: 1px solid var(--color-border); font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+    .d-rejected strong { color: var(--color-ink-2); }
+
+    /* ── Process steps ── */
+    .process-steps { margin-top: var(--space-4); }
+    .process-step { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); align-items: start; }
+    .process-step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--font-display); font-size: var(--size-lg); font-weight: 700; color: var(--color-border); line-height: 1.2; }
+    .step-title { font-size: var(--size-sm); font-weight: 700; color: var(--color-ink); margin-bottom: 5px; max-width: none; }
+    .step-desc { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+
+    /* ── Screens ── */
+    .screens-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: var(--space-3); margin-top: var(--space-6); align-items: stretch; }
+    .screen-card { border: 1px solid var(--color-border); overflow: hidden; display: flex; flex-direction: column; background: var(--color-surface); }
+    .screen-thumb { aspect-ratio: 9/16; position: relative; overflow: hidden; }
+    .screen-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .screen-badge { position: absolute; bottom: 9px; left: 9px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(0,0,0,.65); backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,.25); padding: 2px 8px; border-radius: 100px; }
+    .screen-info { padding: 12px 14px; }
+    .screen-name { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 3px; }
+    .screen-desc { font-size: 11px; color: var(--color-ink-3); line-height: 1.5; }
+
+    .onboarding-strip { display: grid; grid-template-columns: repeat(6,1fr); gap: var(--space-2); margin-top: var(--space-6); }
+    .onboarding-strip img { width: 100%; aspect-ratio: 9/16; object-fit: cover; object-position: top; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+
+    /* ── Learning callout ── */
+    .learning { background: var(--color-surface); border-left: 2px solid var(--color-ink); padding: var(--space-4); margin: var(--space-4) 0; }
+    .learning-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-1); max-width: none; }
+    .learning-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+    .learning-body strong { color: var(--color-ink); }
+
+    /* ── Scope note ── */
+    .scope-note { border: 1px solid var(--color-border); padding: var(--space-4); margin-top: var(--space-4); }
+    .scope-note-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-2); max-width: none; }
+    .scope-note-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1000px) {
+      .screens-grid { grid-template-columns: repeat(3,1fr); }
+      .onboarding-strip { grid-template-columns: repeat(3,1fr); }
+    }
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; gap: var(--space-6); }
+      .decision { grid-template-columns: 1fr; }
+      .d-title { padding-right: 0; margin-bottom: var(--space-2); }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .screens-grid { grid-template-columns: repeat(2,1fr); }
+      .onboarding-strip { grid-template-columns: repeat(2,1fr); }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .stat-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
+        <img class="nav__logo-img nav__logo-img--dark" src="../assets/images/AL-white.webp" alt="AL" />
+        <img class="nav__logo-img nav__logo-img--light" src="../assets/images/AL.webp" alt="AL" />
+        <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="../about.html">About</a></li>
+      </ul>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="4" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <line x1="10" y1="0.5" x2="10" y2="2.5"/>
+            <line x1="10" y1="17.5" x2="10" y2="19.5"/>
+            <line x1="0.5" y1="10" x2="2.5" y2="10"/>
+            <line x1="17.5" y1="10" x2="19.5" y2="10"/>
+            <line x1="3.5" y1="3.5" x2="4.9" y2="4.9"/>
+            <line x1="15.1" y1="15.1" x2="16.5" y2="16.5"/>
+            <line x1="3.5" y1="16.5" x2="4.9" y2="15.1"/>
+            <line x1="15.1" y1="4.9" x2="16.5" y2="3.5"/>
+          </g>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" width="11" height="11" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M17.5 12.5A7.8 7.8 0 1 1 7.5 2.5a6.2 6.2 0 0 0 10 10z" fill="currentColor"/>
+        </svg>
+        <span class="theme-toggle__thumb"></span>
+      </button>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">← All work</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="container">
+      <div class="hero-tags">
+        <span class="hero-tag hero-tag--filled">UX/UI · Contract</span>
+        <span class="hero-tag">iOS App · 0 to 1</span>
+        <span class="hero-tag">Gamification</span>
+      </div>
+      <h1 class="hero-h1 fade-up">Accountability, gamified.<br><em>Built for the brotherhood.</em></h1>
+      <p class="hero-lead fade-up">Brotherize is a social fitness app built on a simple bet: people stay consistent when someone they respect is watching. Posts don't get "likes" — they get upvotes that convert into points, streaks, and rank. I was brought on as the sole product designer to take the concept from discovery through a fully designed iOS product, shipped as an MVP on the App Store.</p>
+      <div class="hero-meta fade-up">
+        <div class="hero-meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Product Designer (Contract)</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Type</p>
+          <p class="meta-value">0-to-1 client engagement</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Platform</p>
+          <p class="meta-value">iOS</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Year</p>
+          <p class="meta-value">2023–2024</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Deliverable</p>
+          <p class="meta-value">Full hi-fi prototype → shipped MVP</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div>
+    <div class="container" style="padding-left:0;padding-right:0;max-width:100%;">
+      <div class="stat-row" style="max-width:var(--max-width);margin:0 auto;padding:0 var(--space-4);">
+        <div class="stat-cell">
+          <p class="stat-num">0→1</p>
+          <p class="stat-desc">Full product designed from concept to shipped MVP</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">40+</p>
+          <p class="stat-desc">Screens designed across onboarding, feed, challenges &amp; profile</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">3</p>
+          <p class="stat-desc">Core loops engineered for retention: vote, compete, climb rank</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">Live</p>
+          <p class="stat-desc">Shipped and available as a working MVP on the App Store</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">01 — Context</p>
+      <div class="grid-2">
+        <div>
+          <h2>A fitness app built on peer pressure — the good kind.</h2>
+          <p>Most fitness apps track reps and calories for an audience of one. Brotherize starts from a different premise: men stay consistent when someone they respect can see their effort. The product's whole identity — <em>"Be the Rize"</em> — is built around a brotherhood of accountability partners who post their training, vote on each other's effort, and climb a shared rank ladder together.</p>
+        </div>
+        <div>
+          <p>I was brought on as the sole product designer on a contract engagement, working directly from the founder's concept to take Brotherize from an early idea to a fully designed, developer-ready iOS product — covering onboarding, the social feed, the challenge system, and the points economy that ties the whole loop together.</p>
+          <blockquote>
+            <p>"Convince your brother to tackle your most dreaded exercise. Record it in a video or picture and reply to this post."</p>
+          </blockquote>
+          <p style="font-size:var(--size-xs);color:var(--color-ink-3);">— an in-app daily challenge prompt</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">02 — Problem</p>
+      <div class="grid-2">
+        <div>
+          <h2>A "like" doesn't carry enough weight to build a habit around.</h2>
+          <p>Translating "accountability" into an actual product meant solving three connected design problems before a single high-fidelity screen got drawn.</p>
+        </div>
+        <div>
+          <div class="problem-row">
+            <p class="problem-title">Generic engagement doesn't reward real effort</p>
+            <p class="problem-desc">A flat "like" treats a genuine training partner's support the same as a passive scroll-past tap. In a community built around pushing each other, the feedback mechanic needed to carry weight — and feed something bigger than the post itself.</p>
+          </div>
+          <div class="problem-row">
+            <p class="problem-title">No recurring reason to come back today specifically</p>
+            <p class="problem-desc">An open, unstructured feed is something you check when you remember to. It doesn't create urgency. Without a time-boxed hook, "brotherhood accountability" is just a nicer word for a workout photo feed.</p>
+          </div>
+          <div class="problem-row">
+            <p class="problem-title">Gamification is hollow unless the reward is real</p>
+            <p class="problem-desc">Points and badges are cheap to design and easy to ignore. For a rank system to motivate a fitness-minded, competitive audience, progress needed to be transparent — and redeemable for something outside the app.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">03 — Process</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Discovery and research first, then design the loop before the screens.</h2>
+          <p>Working solo on the design side, the priority was making sure the core retention loop — post, vote, earn, rank, redeem — held together logically before investing in visual polish.</p>
+        </div>
+        <div>
+          <p>Design thinking framed every stage: understand the founder's vision and the audience it's for, define the mechanics that would actually hold attention, then prototype and refine in Figma before handing a build-ready file to engineering.</p>
+        </div>
+      </div>
+      <div class="process-steps">
+        <div class="process-step">
+          <p class="step-num">1</p>
+          <div>
+            <p class="step-title">Discovery &amp; concept alignment</p>
+            <p class="step-desc">Worked directly with the founder to translate "brotherhood accountability" into a concrete feature set — a social feed, a directional voting mechanic, a challenge system, and a points-based rank ladder — before any UI existed.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <p class="step-num">2</p>
+          <div>
+            <p class="step-title">User research &amp; competitive analysis</p>
+            <p class="step-desc">Looked across social fitness apps and gamified consumer products to identify which mechanics — streaks, tiered progression, redeemable points — translate credibly to a male fitness audience without reading as gimmicky or juvenile.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <p class="step-num">3</p>
+          <div>
+            <p class="step-title">Wireframing the core loop</p>
+            <p class="step-desc">Mapped post → vote → points → rank → redeem as a single connected system before styling anything, to confirm the mechanic that was supposed to drive daily retention actually worked end to end for a new user.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <p class="step-num">4</p>
+          <div>
+            <p class="step-title">High-fidelity visual design</p>
+            <p class="step-desc">Designed a dark, high-contrast, green-on-black identity in Figma befitting a competitive, masculine fitness brand — including a rank ladder (Snake through Dragon-tier ranks like Cerberus) with badge art that feels earned rather than childish.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <p class="step-num">5</p>
+          <div>
+            <p class="step-title">Prototyping &amp; handoff</p>
+            <p class="step-desc">Built a full interactive prototype covering 40+ screens — onboarding, auth, feed, challenges, profile, and settings — and handed a build-ready file to engineering. The MVP shipped to the App Store from this handoff.</p>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:var(--space-2);margin-top:var(--space-6);">First-run coachmark tour</p>
+      <div class="onboarding-strip">
+        <img src="../assets/images/brotherize-onboarding-1.png" alt="Onboarding step introducing the navigation bar" />
+        <img src="../assets/images/brotherize-onboarding-2.png" alt="Onboarding step introducing the challenges icon" />
+        <img src="../assets/images/brotherize-onboarding-3.png" alt="Today's Challenge screen with countdown timer" />
+        <img src="../assets/images/brotherize-onboarding-4.png" alt="Onboarding step introducing the add post button" />
+        <img src="../assets/images/brotherize-onboarding-5.png" alt="Onboarding step introducing the profile page" />
+        <img src="../assets/images/brotherize-onboarding-6.png" alt="Onboarding step introducing points redemption" />
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">04 — Design decisions</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Four decisions that shaped the retention loop.</h2>
+        </div>
+        <div>
+          <p>Each decision traces back to one of the three problems above — turning a vague "accountability" pitch into mechanics a new user could feel within their first session.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="decision">
+          <div>
+            <p class="d-num">01</p>
+            <p class="d-title">Upvote / downvote replaces "like"</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Directional voting tied to points</span>
+            <p class="d-rationale">Every vote feeds directly into the points economy (3 points per upvote received) that drives rank and rewards — so reacting to a post carries real weight instead of being a throwaway gesture. Votes are also attributable, not anonymous: a dedicated Voters screen shows exactly who upvoted or downvoted, which keeps feedback honest in a community that's explicitly about accountability rather than vanity metrics.</p>
+            <img src="../assets/images/brotherize-voters.png" alt="Voters screen showing attributed upvotes and downvotes" class="case-image" style="max-width:320px;" />
+            <p class="d-rejected"><strong>Rejected:</strong> A single-tap "like" button. A like carries no weight in a rank-based economy — it would decouple the social feedback loop from the reward loop that's the product's core hook.</p>
+          </div>
+        </div>
+
+        <div class="decision">
+          <div>
+            <p class="d-num">02</p>
+            <p class="d-title">Points, streaks &amp; a redeemable rank ladder</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Transparent points economy, redeemable for real merch</span>
+            <p class="d-rationale">A multi-tier rank ladder — from a low-level Snake up through Dragon-tier ranks like Cerberus — gives members a name and a badge for their progress, and every point is itemized in a Points History log (daily streak, comment, upvote received) so scoring never feels like a black box. Crucially, points redeem for physical merch through the Brotherize store, closing the loop from digital status to a real-world reward.</p>
+            <img src="../assets/images/brotherize-learn-more.png" alt="Points system and rank explainer screen" class="case-image" style="max-width:320px;" />
+            <p class="d-rejected"><strong>Rejected:</strong> Purely cosmetic badges. Badges alone don't extend the habit loop past the app itself, and give the user no explanation of why they were earned or what they're worth.</p>
+          </div>
+        </div>
+
+        <div class="decision">
+          <div>
+            <p class="d-num">03</p>
+            <p class="d-title">Timed daily challenges, not an open feed</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ One active challenge, visible countdown, dedicated entries feed</span>
+            <p class="d-rationale">A single daily prompt with a hard countdown ("23h 52m remaining…") gives the whole community one shared thing to respond to, instead of a diffuse, infinite feed. Entries get their own voting and comment thread, turning a daily workout into a small, time-boxed competition rather than just another post.</p>
+            <p class="d-rejected"><strong>Rejected:</strong> Open-ended, optional challenges with no timer. Urgency — the countdown, the daily streak — is what turns a nice-to-have feature into a reason to open the app today specifically.</p>
+          </div>
+        </div>
+
+        <div class="decision">
+          <div>
+            <p class="d-num">04</p>
+            <p class="d-title">In-context onboarding, not a tutorial</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ A spotlighted coachmark tour over the live app</span>
+            <p class="d-rationale">The 6-step first-run tour spotlights the nav bar, the challenge icon, the profile, and the rewards system directly on the real, already-populated feed — so the first session doubles as the first lesson, with nothing to skip past before reaching real content.</p>
+            <p class="d-rejected"><strong>Rejected:</strong> Dedicated "how it works" onboarding slides shown before the app itself. Static slides are abstract and easy to tune out; teaching a feature where it actually lives sticks better.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">05 — Key screens</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>The full loop, screen by screen.</h2>
+          <p>From first launch to redeeming points, the design covers the complete member journey — onboarding, feed, challenges, profile, and the utility screens that hold it all together.</p>
+        </div>
+        <div>
+          <p>Each screen carries a single clear job, from the first-run coachmarks through to the utility screens that round out the settings and moderation experience.</p>
+        </div>
+      </div>
+
+      <div class="screens-grid">
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-welcome.png" alt="Brotherize welcome splash screen" />
+            <span class="screen-badge">Welcome</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Welcome</p>
+            <p class="screen-desc">First-run splash introducing the brotherhood positioning before signup.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-registration.png" alt="Brotherize registration screen" />
+            <span class="screen-badge">Auth</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Registration</p>
+            <p class="screen-desc">Full profile capture up front, including an optional referral code for brotherhood invites.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-home.png" alt="Brotherize home feed" />
+            <span class="screen-badge">Feed</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Home feed</p>
+            <p class="screen-desc">Upvote/downvote, comment threads, and a bouncing challenge banner surface directly in the feed.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-new-post.png" alt="Brotherize new post composer" />
+            <span class="screen-badge">Post</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">New post</p>
+            <p class="screen-desc">Simple photo/video composer — no friction between finishing a set and posting proof of it.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-post-comments.png" alt="Brotherize post with threaded comments" />
+            <span class="screen-badge">Feed</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Comment thread</p>
+            <p class="screen-desc">Threaded replies encourage back-and-forth banter — community, not just reactions.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-challenge-feed.png" alt="Brotherize past challenges feed" />
+            <span class="screen-badge">Challenges</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Past challenges</p>
+            <p class="screen-desc">Every prior daily challenge stays browsable, with vote counts and entry totals intact.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-challenge-entries-empty.png" alt="Brotherize challenge entries empty state" />
+            <span class="screen-badge">Challenges</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Entries — empty state</p>
+            <p class="screen-desc">A direct call to action to be first, rather than a blank screen with nothing to do.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-challenge-entries.png" alt="Brotherize challenge entries feed" />
+            <span class="screen-badge">Challenges</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Entries feed</p>
+            <p class="screen-desc">Each entry gets its own vote and comment thread, separate from the general feed.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-profile-mine.png" alt="Brotherize own profile screen" />
+            <span class="screen-badge">Profile</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">My profile</p>
+            <p class="screen-desc">Rank badge, points, streak, and a redeem-points CTA sit above the post grid — status is always visible.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-profile-other.png" alt="Brotherize another member's profile screen" />
+            <span class="screen-badge">Profile</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Another member's profile</p>
+            <p class="screen-desc">Same status signals shown on every profile — rank is a public, comparable thing.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-points-history.png" alt="Brotherize points history screen" />
+            <span class="screen-badge">Rewards</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Points history</p>
+            <p class="screen-desc">An itemized ledger of every point earned and why — daily streak, comment, upvote received.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-rank-up.png" alt="Brotherize rank-up celebration screen" />
+            <span class="screen-badge">Rewards</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Rank-up celebration</p>
+            <p class="screen-desc">A full-screen moment when a member crosses into a new rank tier — progress made visible.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-notifications.png" alt="Brotherize notifications screen" />
+            <span class="screen-badge">Utility</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Notifications</p>
+            <p class="screen-desc">Mentions, follows, challenge entries, and point events grouped by recency.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-menu.png" alt="Brotherize menu screen" />
+            <span class="screen-badge">Utility</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Menu</p>
+            <p class="screen-desc">Links out to the Brotherize online shop where points-based rewards are redeemed.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-blocked-users.png" alt="Brotherize blocked users screen" />
+            <span class="screen-badge">Utility</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Blocked users</p>
+            <p class="screen-desc">Basic moderation controls — a necessity for any app built around public, competitive posting.</p>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <img src="../assets/images/brotherize-login.png" alt="Brotherize login screen" />
+            <span class="screen-badge">Auth</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Login</p>
+            <p class="screen-desc">The green-on-black identity established from the very first screen a user sees.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SCOPE -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">06 — Scope &amp; constraints</p>
+      <div class="grid-2">
+        <div>
+          <h2>What I owned — and what I didn't.</h2>
+          <p>Brotherize was a contract engagement: I owned end-to-end mobile product design, from discovery through wireframes, high-fidelity UI, and a build-ready interactive prototype in Figma.</p>
+        </div>
+        <div>
+          <p>A separate engineering team built the iOS app itself, the backend and points logic, and the external merch storefront that redeemed points connect out to. The design work shown here is the full scope of my contribution — the mechanics, the visual system, and the screens engineering built from.</p>
+          <div class="scope-note">
+            <p class="scope-note-label">Why I'm including this project</p>
+            <p class="scope-note-body">Brotherize is the clearest example in my portfolio of owning a product's design from a one-line founder pitch to something an engineering team could actually build — including the parts of the job that aren't visual design at all: figuring out which gamification mechanics would hold up under daily use, and which would feel hollow within a week.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">07 — Reflection</p>
+      <div class="grid-2">
+        <div>
+          <h2>What I'd do differently.</h2>
+          <p>The rank ladder and points economy were designed before real usage data existed to tune them against. I'd want a second pass once the app had live members — specifically, checking whether the point values (3 per upvote, 1 per comment) actually produced the daily-return behaviour they were designed for, or needed rebalancing.</p>
+          <p>I'd also push earlier for a lightweight way to test the challenge cadence itself — daily worked well on paper, but only real retention data can confirm whether daily is too frequent, or exactly right, for this audience.</p>
+        </div>
+        <div>
+          <h2>What this project taught me.</h2>
+          <p>Designing a gamification system is a different discipline from designing a screen. The visual design — the rank badges, the green-on-black identity — is the part that's easy to show. The harder, less visible work was making sure every point, streak, and rank tier connected back to a behaviour worth reinforcing, rather than existing as decoration.</p>
+          <p>Owning a product 0-to-1 as a solo contractor also meant being the only check on scope. Every screen had to earn its place in the 40-screen build, because there was no larger design team to catch something that didn't serve the core loop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
