@@ -9,8 +9,7 @@
   <meta name="description" content="BGIS Intrazone revamp: modernising an enterprise employee portal and bringing it to WCAG 2.1 accessibility compliance. Senior Product Designer case study by Alfred Law." />
   <script>
     (function () {
-      var stored = localStorage.getItem('theme');
-      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>

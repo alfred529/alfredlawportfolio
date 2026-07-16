@@ -9,8 +9,7 @@
   <meta name="description" content="LetsEat: a self-initiated dine-in menu app concept for a post-COVID world — QR scan, no app install, consistent experience across every restaurant. UX/UI case study by Alfred Law." />
   <script>
     (function () {
-      var stored = localStorage.getItem('theme');
-      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>

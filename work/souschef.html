@@ -9,8 +9,7 @@
   <meta name="description" content="SousChef: an AI-powered recipe collection web app. Designed in a 3-day sprint and built with Claude Code by Alfred Law." />
   <script>
     (function () {
-      var stored = localStorage.getItem('theme');
-      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>

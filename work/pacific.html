@@ -9,8 +9,7 @@
   <meta name="description" content="Pacific: a two-sided mental health intake system designed for Kids Help Phone in 48 hours — gamified youth intake + real-time counselor dashboard. Hackathon case study by Alfred Law." />
   <script>
     (function () {
-      var stored = localStorage.getItem('theme');
-      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>

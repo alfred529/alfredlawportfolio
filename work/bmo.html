@@ -9,8 +9,7 @@
   <meta name="description" content="Growth design at BMO: 57.2% conversion lift on the Auto Loan lead form, plus a full homepage redesign from competitive analysis to launch. Senior Product Designer case study by Alfred Law." />
   <script>
     (function () {
-      var stored = localStorage.getItem('theme');
-      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
